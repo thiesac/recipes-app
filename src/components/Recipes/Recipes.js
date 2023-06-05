@@ -12,24 +12,36 @@ function Recipes() {
     <section>
       {
         foodData.map(
-          ({ strMealThumb, strMeal, index }) => (<div
-            data-testid="${index}-recipe-card"
-            key={ index }
-          >
-            <img src={ strMealThumb } alt={ strMeal } />
-            <p>{ strMeal }</p>
-          </div>)
+          ({ strMealThumb, strMeal, index }) => (
+            <div
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
+            >
+              <img
+                src={ strMealThumb }
+                alt={ strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+            </div>
+          ),
         )
       }
       {
         drinkData.map(
-          ({ strDrinkThumb, strDrink, index }) => (<div
-            data-testid="${index}-recipe-card"
-            key={ index }
-          >
-            <img src={ strDrinkThumb } alt={ strDrink } />
-            <p>{ strDrink }</p>
-          </div>)
+          ({ strDrinkThumb, strDrink, index }) => (
+            <div
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
+            >
+              <img
+                src={ strDrinkThumb }
+                alt={ strDrink }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+            </div>
+          ),
         )
       }
     </section>
