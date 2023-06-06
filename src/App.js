@@ -1,6 +1,6 @@
 // import './App.css';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import rockGlass from './images/rockGlass.svg';
+// import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyProvider from './context/MyProvider';
 import Recipes from './components/Recipes/Recipes';
