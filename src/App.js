@@ -22,6 +22,7 @@ function App() {
         </object>
       </MyProvider>
       <Switch>
+        {/* rotas */}
         <Route exact path="/" component="" />
         <Route exact path="/meals" component={ Meals } />
         <Route exact path="/drinks" component={ Drinks } />

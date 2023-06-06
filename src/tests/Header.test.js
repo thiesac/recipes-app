@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import Header from '../components/Header/Header';
 
 describe('Header', () => {
+  const pageTitle = 'page-title';
   it('deve renderizar o ícone de perfil', () => {
     render(
       <MemoryRouter initialEntries={ ['/'] }>
@@ -47,7 +48,7 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const title = screen.getByTestId('page-title');
+    const title = screen.getByTestId(pageTitle);
     expect(title).toHaveTextContent('Meals');
   });
 
@@ -58,7 +59,7 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const title = screen.getByTestId('page-title');
+    const title = screen.getByTestId(pageTitle);
     expect(title).toHaveTextContent('Drinks');
   });
 
@@ -69,7 +70,7 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const title = screen.getByTestId('page-title');
+    const title = screen.getByTestId(pageTitle);
     expect(title).toHaveTextContent('Profile');
   });
 
@@ -80,7 +81,7 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const title = screen.getByTestId('page-title');
+    const title = screen.getByTestId(pageTitle);
     expect(title).toHaveTextContent('Done Recipes');
   });
 
@@ -91,7 +92,7 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const title = screen.getByTestId('page-title');
+    const title = screen.getByTestId(pageTitle);
     expect(title).toHaveTextContent('Favorite Recipes');
   });
 
@@ -105,7 +106,7 @@ describe('Header', () => {
     const profileIcon = screen.getByAltText('Profile');
     userEvent.click(profileIcon);
 
-    expect(screen.getByTestId('page-title')).toHaveTextContent('Profile');
+    expect(screen.getByTestId(pageTitle)).toHaveTextContent('Profile');
   });
 
   it('deve navegar para a página de receitas concluídas ao clicar no título "Done Recipes"', () => {
@@ -115,10 +116,10 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const doneRecipesTitle = screen.getByTestId('page-title');
+    const doneRecipesTitle = screen.getByTestId(pageTitle);
     userEvent.click(doneRecipesTitle);
 
-    expect(screen.getByTestId('page-title')).toHaveTextContent('Done Recipes');
+    expect(screen.getByTestId(pageTitle)).toHaveTextContent('Done Recipes');
   });
 
   it('deve navegar para a página de receitas favoritas ao clicar no título "Favorite Recipes"', () => {
@@ -128,9 +129,9 @@ describe('Header', () => {
       </MemoryRouter>,
     );
 
-    const favoriteRecipesTitle = screen.getByTestId('page-title');
+    const favoriteRecipesTitle = screen.getByTestId(pageTitle);
     userEvent.click(favoriteRecipesTitle);
 
-    expect(screen.getByTestId('page-title')).toHaveTextContent('Favorite Recipes');
+    expect(screen.getByTestId(pageTitle)).toHaveTextContent('Favorite Recipes');
   });
 });
