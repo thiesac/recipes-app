@@ -1,46 +1,57 @@
+// src/components/Header/Header.jsx
+
 import React from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 
 function Header() {
-  const { location } = useHistory();
+  const location = useLocation();
 
-  const shouldRenderSearchIcon = ![
-    '/profile',
-    '/done-recipes',
-    '/favorite-recipes',
-  ].includes(location.pathname);
+  const renderSearchButton = () => {
+    // Verifica se a página atual é /meals ou /drinks para mostrar o ícone de pesquisa
+    if (location.pathname === '/meals' || location.pathname === '/drinks') {
+      return <img src={ searchIcon } alt="icon-pesquisa" data-testid="search-top-btn" />;
+    }
+    return null;
+  };
 
-  const title = () => {
+  const renderTitle = () => {
+    let title = '';
+
+    // Define o título com base na rota atual
     switch (location.pathname) {
     case '/meals':
-      return 'Meals';
+      title = 'Meals';
+      break;
     case '/drinks':
-      return 'Drinks';
+      title = 'Drinks';
+      break;
     case '/profile':
-      return 'Profile';
+      title = 'Profile';
+      break;
     case '/done-recipes':
-      return 'Done Recipes';
+      title = 'Done Recipes';
+      break;
     case '/favorite-recipes':
-      return 'Favorite Recipes';
+      title = 'Favorite Recipes';
+      break;
     default:
-      return false;
+      title = '';
+      break;
     }
+
+    return <h1 data-testid="page-title">{title}</h1>;
   };
 
   return (
-    <div>
-      <h1 data-testid="page-title">{title()}</h1>
+    <header>
       <Link to="/profile">
-        <img src={ profileIcon } alt="icon-perfil" data-testid="profile-top-btn" />
+        <img src={ profileIcon } alt="Profile" data-testid="profile-top-btn" />
       </Link>
-
-      {shouldRenderSearchIcon && (
-        <img src={ searchIcon } alt="icon-pesquisa" data-testid="search-top-btn" />
-      )}
-    </div>
+      {renderSearchButton()}
+      {renderTitle()}
+    </header>
   );
 }
 
