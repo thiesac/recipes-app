@@ -12,7 +12,6 @@ import Meals from './pages/Meals/Meals';
 import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
 
-
 function App() {
   return (
     <div className="meals">
