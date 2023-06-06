@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history'; // ...............................................de onde???
-import { Router } from 'react-router-dom'; // ................................................... de onde???
 import renderWithRouter from '../helpers/renderWithRouter';
 import App from '../App';
 import Login from '../pages/Login';
