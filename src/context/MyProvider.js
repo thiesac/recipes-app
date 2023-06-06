@@ -1,9 +1,6 @@
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
-
-
 
 function MyProvider({ children }) {
   const [foodData, setFoodData] = useState([]);
@@ -17,7 +14,9 @@ function MyProvider({ children }) {
   }, []);
 
   const fetchDrink = useCallback(async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await fetch(
+      'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
+    );
     const receivedData = await response.json();
     const finalIndex = 12;
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
@@ -28,15 +27,17 @@ function MyProvider({ children }) {
     fetchDrink();
   }, [fetchFood, fetchDrink]);
 
-  const values = useMemo(() => ({
-    foodData, setFoodData, drinkData, setDrinkData,
-  }), [foodData, drinkData]);
-
-  return (
-    <MyContext.Provider value={ values }>
-      { children }
-    </MyContext.Provider>
+  const values = useMemo(
+    () => ({
+      foodData,
+      setFoodData,
+      drinkData,
+      setDrinkData,
+    }),
+    [foodData, drinkData],
   );
+
+  return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;
 }
 
 MyProvider.propTypes = {
@@ -44,4 +45,3 @@ MyProvider.propTypes = {
 }.isRequired;
 
 export default MyProvider;
-

@@ -10,7 +10,7 @@ function Login() {
   const checkFormValidity = (newEmail, newPassword) => {
     const minimumPasswordLength = 6;
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail);
-    setIsFormValid(isValidEmail && newPassword.length > minimumPasswordLength);
+    setIsFormValid(isValidEmail && newPassword.length >= minimumPasswordLength);
   };
 
   const handleEmailChange = (event) => {
