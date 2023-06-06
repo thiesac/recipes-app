@@ -3,6 +3,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import Header from '../components/Header/Header';
 
 describe('Header', () => {
@@ -50,9 +51,9 @@ describe('Header', () => {
     expect(title).toHaveTextContent('Meals');
   });
 
-  /*   it('deve navegar para a página de perfil ao clicar no ícone de perfil', () => {
+  it('deve navegar para a página de perfil ao clicar no ícone de perfil', () => {
     render(
-      <MemoryRouter initialEntries={ ['/'] }>
+      <MemoryRouter initialEntries={ ['/profile'] }>
         <Header />
       </MemoryRouter>,
     );
@@ -61,5 +62,5 @@ describe('Header', () => {
     userEvent.click(profileIcon);
 
     expect(screen.getByTestId('page-title')).toHaveTextContent('Profile');
-  }); */
+  });
 });
