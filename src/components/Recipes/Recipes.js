@@ -6,7 +6,7 @@ function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
 
   const showFood = () => foodData.map(
-    ({ strMealThumb, strMeal, index }) => (
+    ({ strMealThumb, strMeal }, index) => (
       <div
         data-testid={ `${index}-recipe-card` }
         key={ strMealThumb }
@@ -22,7 +22,7 @@ function Recipes({ type }) {
   );
 
   const showDrinks = () => drinkData.map(
-    ({ strDrinkThumb, strDrink, index }) => (
+    ({ strDrinkThumb, strDrink }, index) => (
       <div
         data-testid={ `${index}-recipe-card` }
         key={ strDrinkThumb }
