@@ -28,7 +28,9 @@ function MyProvider({ children }) {
     fetchDrink();
   }, [fetchFood, fetchDrink]);
 
-  const values = useMemo(() => ({ foodData, setFoodData, drinkData, setDrinkData }), [foodData, drinkData]);
+  const values = useMemo(() => ({
+    foodData, setFoodData, drinkData, setDrinkData,
+  }), [foodData, drinkData]);
 
   return (
     <MyContext.Provider value={ values }>

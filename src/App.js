@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,14 +10,14 @@ function App() {
     <div className="meals">
       <Switch>
         <MyProvider>
-          <span className="logo">TRYBE</span>
+          {/* <span className="logo">TRYBE</span>
           <object
             className="rocksGlass"
             type="image/svg+xml"
             data={ rockGlass }
           >
             Glass
-          </object>
+          </object> */}
           <Route exact path="/meals" component={ Recipes } />
         </MyProvider>
       </Switch>
