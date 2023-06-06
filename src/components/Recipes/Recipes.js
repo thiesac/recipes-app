@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
+import { PropTypes } from 'prop-types';
 import MyContext from '../../context/MyContext';
-// import { useParams } from 'react-router-dom';
 
-function Recipes() {
+function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
-  console.log(foodData);
 
   const showFood = () => foodData.map(
     ({ strMealThumb, strMeal, index }) => (
@@ -21,7 +20,7 @@ function Recipes() {
       </div>
     ),
   );
-  console.log(foodData);
+
   const showDrinks = () => drinkData.map(
     ({ strDrinkThumb, strDrink, index }) => (
       <div
@@ -38,13 +37,24 @@ function Recipes() {
     ),
   );
 
-  // const { type } = useParams
-  return (
-    <section>
-      {showFood()}
-      {showDrinks()}
-    </section>
-  );
+  if (type === 'meals') {
+    return (
+      <>
+        { showFood() }
+      </>
+    );
+  }
+  if (type === 'drinks') {
+    return (
+      <>
+        { showDrinks() }
+      </>
+    );
+  }
 }
+
+Recipes.propTypes = {
+  type: PropTypes.string,
+}.isRequired;
 
 export default Recipes;
