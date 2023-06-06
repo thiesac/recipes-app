@@ -5,15 +5,15 @@ import MyContext from '../../context/MyContext';
 function CategoryFilterBtn({ type }) {
   const { categoryFoodData, categoryDrinksData } = useContext(MyContext);
 
-  const btnMeals = () => categoryFoodData.map(({ strCategory, categoryName }) => (
+  const btnMeals = () => categoryFoodData.map(({ strCategory }) => (
     <div key={ strCategory }>
-      <button data-testid={ `${categoryName}-category-filter` }>{ strCategory }</button>
+      <button data-testid={ `${strCategory}-category-filter` }>{ strCategory }</button>
     </div>
   ));
 
-  const btnDrinks = () => categoryDrinksData.map(({ strCategory, categoryName }) => (
+  const btnDrinks = () => categoryDrinksData.map(({ strCategory }) => (
     <div key={ strCategory }>
-      <button data-testid={ `${categoryName}-category-filter` }>{ strCategory }</button>
+      <button data-testid={ `${strCategory}-category-filter` }>{ strCategory }</button>
     </div>
   ));
 
