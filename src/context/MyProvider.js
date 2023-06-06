@@ -1,11 +1,11 @@
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
-// const INITIAL_STATE = {};
+
 
 function MyProvider({ children }) {
-  // const [state, setState] = useState(INITIAL_STATE);
   const [foodData, setFoodData] = useState([]);
   const [drinkData, setDrinkData] = useState([]);
 
@@ -44,3 +44,4 @@ MyProvider.propTypes = {
 }.isRequired;
 
 export default MyProvider;
+
