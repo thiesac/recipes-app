@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { callMealsRecipe, callDrinksRecipe } from '../../services/eatApi';
+import MyContext from '../../context/MyContext';
 
 /* Após o login (page 'Login.js'), o usuário será redirecionado para a page 'Meals.js'.
 Nela, pelo que vi, haverá o component 'Header.js', no qual haverá a opção de buscar, isto é,
@@ -17,12 +18,10 @@ Modificados:
 - MyProvider.js */
 
 function SearchBar() {
-  const { foodData, setFoodData, drinkData, setDrinkData } = useContext(MyContext);
+  const { setFoodData, setDrinkData } = useContext(MyContext);
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const history = useHistory();
-  const magicNumber = 12;
-  const isMealSearch = history.location.pathname === '/meals'; // variável booleana que indica se a busca é para refeições (true) ou para bebidas (false).
 
   /* O 'searchType' representa o tipo de busca que está sendo realizado.
   Ele pode ter três possíveis valores: 'ingredient' (ingrediente), 'name' (nome) ou 'first-letter' (primeira letra). */
@@ -133,27 +132,6 @@ function SearchBar() {
       >
         Search
       </button>
-      <div>
-        {
-        if (isMealSearch) {
-        foodData.slice(0, magicNumber).map((recipe, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ recipe['strMealThumb'] }
-              alt={ recipe['strMeal'] }
-              data-testid={ `${index}-card-img` }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
-            >
-              {recipe['strMeal']}
-        
-            </p>
-          </div>
-        
-        ))}
-        
-      </div>
 
     </form>
   );
