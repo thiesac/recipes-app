@@ -1,17 +1,30 @@
-// src/components/Header/Header.jsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const location = useLocation();
+  const [searchVisible, setSearchVisible] = useState(false);
 
   const renderSearchButton = () => {
     // Verifica se a página atual é /meals ou /drinks para mostrar o ícone de pesquisa
     if (location.pathname === '/meals' || location.pathname === '/drinks') {
-      return <img src={ searchIcon } alt="icon-pesquisa" data-testid="search-top-btn" />;
+      return (
+        <header>
+          <button
+            onClick={ () => setSearchVisible(!searchVisible) }
+            data-testid="search-top-btn"
+          >
+            <img // Agora o ícone apareceu completo
+              src={ searchIcon }
+              alt="icon-pesquisa"
+            />
+          </button>
+          {searchVisible && <SearchBar />}
+        </header>
+      );
     }
     return null;
   };
