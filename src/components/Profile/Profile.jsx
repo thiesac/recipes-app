@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Header from '../Header/Header';
 import { clearLocalStorage } from '../../helpers/LocalStorage';
+import Footer from '../Footer/Footer';
+
 
 function Profile() {
   const history = useHistory(); // constante necessária para
@@ -41,6 +43,8 @@ function Profile() {
           Logout
         </button>
       </div>
+      <Footer />
+
     </div>
   );
 }
