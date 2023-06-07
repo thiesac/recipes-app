@@ -34,7 +34,7 @@ function MyProvider({ children }) {
       drinkData,
       setDrinkData,
     }),
-    [foodData, drinkData],
+    [foodData, setFoodData, drinkData, setDrinkData],
   );
 
   return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;
