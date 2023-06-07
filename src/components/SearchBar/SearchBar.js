@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { callMealsRecipe, callDrinksRecipe } from '../../services/eatApi';
 
@@ -17,7 +17,7 @@ Modificados:
 - MyProvider.js */
 
 function SearchBar() {
-  const [searchResults, setSearchResults] = useState([]);
+  const { foodData, setFoodData, drinkData, setDrinkData } = useContext(MyContext);
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const history = useHistory();
@@ -34,7 +34,7 @@ function SearchBar() {
     }
     if (history.location.pathname === '/meals') {
       const eatenApiMeal = await callMealsRecipe(searchInput, searchType);
-      setSearchResults(eatenApiMeal);
+      setFoodData(eatenApiMeal);
       if (!eatenApiMeal || eatenApiMeal.length === 0) {
         return global
           .alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -43,7 +43,7 @@ function SearchBar() {
       const finalIndex = 12; // define o índice final que será utilizado no slice. No caso, 12 primeiros elementos do array 'eatenApiMeal'
       const slicedMealData = eatenApiMeal.slice(0, finalIndex);
 
-      setSearchResults(slicedMealData);
+      setFoodData(slicedMealData);
 
       if (eatenApiMeal.length === 1) {
         history.push(`/meals/${eatenApiMeal[0].idMeal}`);
@@ -51,7 +51,7 @@ function SearchBar() {
     }
     if (history.location.pathname === '/drinks') {
       const eatenApiDrink = await callDrinksRecipe(searchInput, searchType);
-      setSearchResults(eatenApiDrink);
+      setDrinkData(eatenApiDrink);
       if (!eatenApiDrink || eatenApiDrink.length === 0) {
         return global
           .alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -60,7 +60,7 @@ function SearchBar() {
       const finalIndex = 12;
       const slicedDrinkData = eatenApiDrink.slice(0, finalIndex);
 
-      setSearchResults(slicedDrinkData);
+      setDrinkData(slicedDrinkData);
 
       if (eatenApiDrink.length === 1) {
         history.push(`/drinks/${eatenApiDrink[0].idDrink}`);
@@ -134,21 +134,25 @@ function SearchBar() {
         Search
       </button>
       <div>
-        {searchResults.slice(0, magicNumber).map((recipe, index) => (
+        {
+        if (isMealSearch) {
+        foodData.slice(0, magicNumber).map((recipe, index) => (
           <div key={ index } data-testid={ `${index}-recipe-card` }>
             <img
-              src={ recipe[isMealSearch ? 'strMealThumb' : 'strDrinkThumb'] }
-              alt={ recipe[isMealSearch ? 'strMeal' : 'strDrink'] }
+              src={ recipe['strMealThumb'] }
+              alt={ recipe['strMeal'] }
               data-testid={ `${index}-card-img` }
             />
             <p
               data-testid={ `${index}-card-name` }
             >
-              {recipe[isMealSearch ? 'strMeal' : 'strDrink']}
-
+              {recipe['strMeal']}
+        
             </p>
           </div>
+        
         ))}
+        
       </div>
 
     </form>
