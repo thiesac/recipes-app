@@ -5,7 +5,7 @@ import MyContext from '../../context/MyContext';
 function CategoryFilterBtn({ type }) {
   const {
     categoryFoodData, categoryDrinksData,
-    clickCategoryFilterFood, clickCategoryFilterDrink,
+    clickCategoryFilterFood, clickCategoryFilterDrink, fetchFood12,
   } = useContext(MyContext);
 
   // ao entrar na rota /meals, página carrega 5 botões para pesquisa por categoria
@@ -35,6 +35,12 @@ function CategoryFilterBtn({ type }) {
   if (type === 'meals') {
     return (
       <>
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => fetchFood12() }
+        >
+          All
+        </button>
         { btnMeals() }
       </>
     );
