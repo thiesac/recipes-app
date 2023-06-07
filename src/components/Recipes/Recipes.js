@@ -5,6 +5,7 @@ import MyContext from '../../context/MyContext';
 function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
 
+  // ao entrar na rota /meals, carrega as 12 primeiras receitas OU carrega as 12 primeiras da categoria
   const showFood = () => foodData.map(
     ({ strMealThumb, strMeal }, index) => (
       <div
@@ -21,6 +22,7 @@ function Recipes({ type }) {
     ),
   );
 
+  // ao entrar na rota /drinks, carrega ss 12 primeiras bebidas OU carrega os 12 primeiros da categoria escolhida
   const showDrinks = () => drinkData.map(
     ({ strDrinkThumb, strDrink }, index) => (
       <div
