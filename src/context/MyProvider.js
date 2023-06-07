@@ -7,6 +7,7 @@ function MyProvider({ children }) {
   const [drinkData, setDrinkData] = useState([]);
   const [categoryFoodData, setCategoryFoodData] = useState([]);
   const [categoryDrinksData, setCategoryDrinksData] = useState([]);
+  const [filterFoodCategory, setfilterFoodCategory] = useState([]);
 
   // pega as 12 primeiras receitas de meals ao carregar o Recipes.js
   const fetchFood12 = useCallback(async () => {
@@ -18,9 +19,7 @@ function MyProvider({ children }) {
 
   // pega as 12 primeiras receitas de drinks ao carregar o Recipes.js
   const fetchDrink12 = useCallback(async () => {
-    const response = await fetch(
-      'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
-    );
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const receivedData = await response.json();
     const finalIndex = 12;
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
@@ -42,6 +41,15 @@ function MyProvider({ children }) {
     setCategoryDrinksData(receivedData.drinks.slice(0, finalIndex));
   }, []);
 
+  // ao clicar em um filtro de categoria de meals, exibe as 12 primeiras receitas da categoria
+  const clickCategoryFilterFood = useCallback(async (category) => {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const receivedData = await response.json();
+    const finalIndex = 12;
+    setfilterFoodCategory(receivedData.meals.slice(0, finalIndex));
+    // console.log(filterFoodCategory);
+  }, []);
+
   useEffect(() => {
     fetchFood12();
     fetchDrink12();
@@ -57,8 +65,11 @@ function MyProvider({ children }) {
       setDrinkData,
       categoryFoodData,
       categoryDrinksData,
+      clickCategoryFilterFood,
+      filterFoodCategory,
     }),
-    [foodData, drinkData, categoryFoodData, categoryDrinksData],
+    [foodData, drinkData, categoryFoodData,
+      categoryDrinksData, clickCategoryFilterFood, filterFoodCategory],
   );
 
   return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;

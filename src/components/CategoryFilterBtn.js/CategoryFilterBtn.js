@@ -3,11 +3,18 @@ import { PropTypes } from 'prop-types';
 import MyContext from '../../context/MyContext';
 
 function CategoryFilterBtn({ type }) {
-  const { categoryFoodData, categoryDrinksData } = useContext(MyContext);
+  const {
+    categoryFoodData, categoryDrinksData, clickCategoryFilterFood,
+  } = useContext(MyContext);
 
   const btnMeals = () => categoryFoodData.map(({ strCategory }) => (
     <div key={ strCategory }>
-      <button data-testid={ `${strCategory}-category-filter` }>{ strCategory }</button>
+      <button
+        data-testid={ `${strCategory}-category-filter` }
+        onClick={ () => clickCategoryFilterFood(strCategory) }
+      >
+        { strCategory }
+      </button>
     </div>
   ));
 
