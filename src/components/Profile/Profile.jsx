@@ -1,3 +1,5 @@
+// src/components/Profile/Profile.jsx
+
 import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Header from '../Header/Header';
