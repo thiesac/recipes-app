@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Header from '../Header/Header';
+import { clearLocalStorage } from '../../helpers/LocalStorage';
 
 function Profile() {
   const history = useHistory(); // constante necessária para
@@ -11,20 +12,34 @@ function Profile() {
     <div>
       <Header />
       <p>Profile</p>
-      {/* Conteúdo da página */}
       <div>
-        {/* Exibe o e-mail */}
+        {/* Exibe o e-mail do local storage */}
         <h1 data-testid="profile-email">{email}</h1>
         {' '}
         <button
-          // muda a tela para /receitas-feitas
+          /*     vai para /done-recipes */
           data-testid="profile-done-btn"
           onClick={ () => history.push('/done-recipes') }
         >
           Done Recipes
         </button>
-        <button data-testid="profile-favorite-btn">Favorite Recipes</button>
-        <button data-testid="profile-logout-btn">Logout</button>
+        <button
+          /* vai para /favorite-recipes */
+          data-testid="profile-favorite-btn"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
+        </button>
+        <button
+          /* faz o logout e limpa o local storage */
+          data-testid="profile-logout-btn"
+          onClick={ () => {
+            clearLocalStorage();
+            history.push('/');
+          } }
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
