@@ -58,7 +58,10 @@ function MyProvider({ children }) {
       categoryFoodData,
       categoryDrinksData,
     }),
-    [foodData, drinkData, categoryFoodData, categoryDrinksData],
+
+    [foodData, drinkData, categoryFoodData,
+      categoryDrinksData, setDrinkData, setFoodData],
+
   );
 
   return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;
