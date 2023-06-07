@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 import { clearLocalStorage } from '../../helpers/LocalStorage';
 import Footer from '../Footer/Footer';
 
-
 function Profile() {
   const history = useHistory(); // constante necessária para
   const user = JSON.parse(localStorage.getItem('user')); // Obtém os dados do usuário do localStorage
@@ -46,7 +45,6 @@ function Profile() {
         </button>
       </div>
       <Footer />
-
     </div>
   );
 }
