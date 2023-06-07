@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { callMealsRecipe, callDrinksRecipe } from '../../services/eatApi';
+import MyContext from '../../context/MyContext';
 
 /* Após o login (page 'Login.js'), o usuário será redirecionado para a page 'Meals.js'.
 Nela, pelo que vi, haverá o component 'Header.js', no qual haverá a opção de buscar, isto é,
@@ -17,12 +18,10 @@ Modificados:
 - MyProvider.js */
 
 function SearchBar() {
-  const [searchResults, setSearchResults] = useState([]);
+  const { setFoodData, setDrinkData } = useContext(MyContext);
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const history = useHistory();
-  const magicNumber = 12;
-  const isMealSearch = history.location.pathname === '/meals'; // variável booleana que indica se a busca é para refeições (true) ou para bebidas (false).
 
   /* O 'searchType' representa o tipo de busca que está sendo realizado.
   Ele pode ter três possíveis valores: 'ingredient' (ingrediente), 'name' (nome) ou 'first-letter' (primeira letra). */
@@ -34,7 +33,7 @@ function SearchBar() {
     }
     if (history.location.pathname === '/meals') {
       const eatenApiMeal = await callMealsRecipe(searchInput, searchType);
-      setSearchResults(eatenApiMeal);
+      setFoodData(eatenApiMeal);
       if (!eatenApiMeal || eatenApiMeal.length === 0) {
         return global
           .alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -43,7 +42,7 @@ function SearchBar() {
       const finalIndex = 12; // define o índice final que será utilizado no slice. No caso, 12 primeiros elementos do array 'eatenApiMeal'
       const slicedMealData = eatenApiMeal.slice(0, finalIndex);
 
-      setSearchResults(slicedMealData);
+      setFoodData(slicedMealData);
 
       if (eatenApiMeal.length === 1) {
         history.push(`/meals/${eatenApiMeal[0].idMeal}`);
@@ -51,7 +50,7 @@ function SearchBar() {
     }
     if (history.location.pathname === '/drinks') {
       const eatenApiDrink = await callDrinksRecipe(searchInput, searchType);
-      setSearchResults(eatenApiDrink);
+      setDrinkData(eatenApiDrink);
       if (!eatenApiDrink || eatenApiDrink.length === 0) {
         return global
           .alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -60,7 +59,7 @@ function SearchBar() {
       const finalIndex = 12;
       const slicedDrinkData = eatenApiDrink.slice(0, finalIndex);
 
-      setSearchResults(slicedDrinkData);
+      setDrinkData(slicedDrinkData);
 
       if (eatenApiDrink.length === 1) {
         history.push(`/drinks/${eatenApiDrink[0].idDrink}`);
@@ -133,23 +132,6 @@ function SearchBar() {
       >
         Search
       </button>
-      <div>
-        {searchResults.slice(0, magicNumber).map((recipe, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ recipe[isMealSearch ? 'strMealThumb' : 'strDrinkThumb'] }
-              alt={ recipe[isMealSearch ? 'strMeal' : 'strDrink'] }
-              data-testid={ `${index}-card-img` }
-            />
-            <p
-              data-testid={ `${index}-card-name` }
-            >
-              {recipe[isMealSearch ? 'strMeal' : 'strDrink']}
-
-            </p>
-          </div>
-        ))}
-      </div>
 
     </form>
   );
