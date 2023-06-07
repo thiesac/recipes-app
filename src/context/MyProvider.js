@@ -59,7 +59,8 @@ function MyProvider({ children }) {
       categoryDrinksData,
     }),
 
-    [foodData, drinkData, categoryFoodData, categoryDrinksData, setDrinkData, setFoodData],
+    [foodData, drinkData, categoryFoodData,
+      categoryDrinksData, setDrinkData, setFoodData],
 
   );
 
