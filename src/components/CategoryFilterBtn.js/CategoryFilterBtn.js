@@ -4,8 +4,8 @@ import MyContext from '../../context/MyContext';
 
 function CategoryFilterBtn({ type }) {
   const {
-    categoryFoodData, categoryDrinksData,
-    clickCategoryFilterFood, clickCategoryFilterDrink, fetchFood12,
+    categoryFoodData, categoryDrinksData, setDrinkData,
+    clickCategoryFilterFood, clickCategoryFilterDrink, setFoodData,
   } = useContext(MyContext);
 
   // ao entrar na rota /meals, página carrega 5 botões para pesquisa por categoria
@@ -32,12 +32,28 @@ function CategoryFilterBtn({ type }) {
     </div>
   ));
 
+  // na rota /meals, ao clicar no botão ALL, traz as 12 receitas sem filtro ('limpa filtros')
+  const btnAllFood = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const receivedData = await response.json();
+    const finalIndex = 12;
+    setFoodData(receivedData.meals.slice(0, finalIndex));
+  };
+
+  // na rota /drinks, ao clicar no botão ALL, traz os 12 drinks sem filtro ('limpa filtros')
+  const btnAllDrinks = async () => {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const receivedData = await response.json();
+    const finalIndex = 12;
+    setDrinkData(receivedData.drinks.slice(0, finalIndex));
+  };
+
   if (type === 'meals') {
     return (
       <>
         <button
           data-testid="All-category-filter"
-          onClick={ () => fetchFood12() }
+          onClick={ () => btnAllFood() }
         >
           All
         </button>
@@ -48,6 +64,12 @@ function CategoryFilterBtn({ type }) {
   if (type === 'drinks') {
     return (
       <>
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => btnAllDrinks() }
+        >
+          All
+        </button>
         { btnDrinks() }
       </>
     );
