@@ -75,8 +75,7 @@ function MyProvider({ children }) {
     }),
     [foodData, drinkData, categoryFoodData,
       categoryDrinksData, clickCategoryFilterFood,
-      clickCategoryFilterDrink,
-      // showFood,
+      clickCategoryFilterDrink, setDrinkData, setFoodData
     ],
   );
 

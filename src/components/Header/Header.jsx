@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const location = useLocation();
@@ -21,8 +22,9 @@ function Header() {
             onClick={ () => setSearchVisible(!searchVisible) }
             type="button"
           />
+
           {searchVisible && (
-            <input
+            <SearchBar
               type="text"
               placeholder="Buscar"
               data-testid="search-input"
