@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import Header from '../Header/Header';
+import Header from '../../components/Header/Header';
 import { clearLocalStorage } from '../../helpers/LocalStorage';
-import Footer from '../Footer/Footer';
+import Footer from '../../components/Footer/Footer';
 
 function Profile() {
   const history = useHistory(); // constante necessária para
