@@ -1,18 +1,22 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-// import { act } from 'react-dom/test-utils';
-// import userEvent from '@testing-library/user-event';
-import CategoryMealsAPI from './mocks/CategoryMealsAPI';
+import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import DefaultMealsAPI from './mocks/DefaultMealsAPI';
 import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
 import DefaultDrinksAPI from './mocks/DefaultDrinksAPI';
-import CategoryDrinks from './mocks/CategoryDrinks';
+import BtnCategoryDrinks from './mocks/BtnCategoryDrinks';
+import BtnCategoryMealsAPI from './mocks/BtnCategoryMealsAPI';
+import MealByCategory from './mocks/MealsByCategory';
+import DrinksByCategory from './mocks/DrinksByCategory';
 
 const mockMeal = DefaultMealsAPI;
-const mockMealBtn = CategoryMealsAPI;
+const mockMealBtn = BtnCategoryMealsAPI;
 const mockDrink = DefaultDrinksAPI;
-const mockDrinkBtn = CategoryDrinks;
+const mockDrinkBtn = BtnCategoryDrinks;
+const mockMealCategory = MealByCategory;
+const mockDrinkCategory = DrinksByCategory;
 
 beforeEach(() => {
   jest.spyOn(global, 'fetch');
@@ -38,6 +42,17 @@ beforeEach(() => {
         json: () => Promise.resolve(mockDrinkBtn),
       });
     }
+    if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef') {
+      return Promise.resolve({
+        json: () => Promise.resolve(mockMealCategory),
+      });
+    }
+    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink') {
+      return Promise.resolve({
+        json: () => Promise.resolve(mockDrinkCategory),
+      });
+    }
+    throw new Error('url não encontrada');
   });
 });
 
@@ -64,9 +79,7 @@ describe('Meals', () => {
       const category1Btn = screen.getByRole('button', { name: /beef/i });
       expect(category1Btn).toBeInTheDocument();
     });
-    // act(() => {
-    //   userEvent.click(screen.getByRole('button', { name: /beef/i }));
-    // });
-    // pq não funciona?
+    act(() => userEvent.click(screen.getByRole('button', { name: /beef/i })));
+    await waitFor(() => screen.getByRole('img', { name: /corba/i }));
   });
 });

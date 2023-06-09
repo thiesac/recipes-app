@@ -1,4 +1,4 @@
-const CategoryMealsAPI = {
+const BtnCategoryMealsAPI = {
   meals: [
     {
       strCategory: 'Beef',
@@ -45,4 +45,4 @@ const CategoryMealsAPI = {
   ],
 };
 
-export default CategoryMealsAPI;
+export default BtnCategoryMealsAPI;
