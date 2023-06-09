@@ -1,4 +1,7 @@
-/* eslint-disable sonarjs/no-duplicate-string */
+const TomatoPuree = 'Tomato Puree';
+const MincedBeef = 'Minced Beef';
+const SpringOnions = 'Spring Onions';
+
 const DefaultMealsAPI = {
   meals: [
     {
@@ -14,7 +17,7 @@ const DefaultMealsAPI = {
       strIngredient1: 'Lentils',
       strIngredient2: 'Onion',
       strIngredient3: 'Carrots',
-      strIngredient4: 'Tomato Puree',
+      strIngredient4: TomatoPuree,
       strIngredient5: 'Cumin',
       strIngredient6: 'Paprika',
       strIngredient7: 'Mint',
@@ -67,7 +70,7 @@ const DefaultMealsAPI = {
       strTags: 'Streetfood, Onthego',
       strYoutube: 'https://www.youtube.com/watch?v=YsJXZwE5pdY',
       strIngredient1: 'Filo Pastry',
-      strIngredient2: 'Minced Beef',
+      strIngredient2: MincedBeef,
       strIngredient3: 'Onion',
       strIngredient4: 'Oil',
       strIngredient5: 'Salt',
@@ -287,7 +290,7 @@ const DefaultMealsAPI = {
       strTags: null,
       strYoutube: 'https://www.youtube.com/watch?v=mulqW-J3Yy4',
       strIngredient1: 'Broad Beans',
-      strIngredient2: 'Spring Onions',
+      strIngredient2: SpringOnions,
       // eslint-disable-next-line sonarjs/no-duplicate-string
       strIngredient3: 'Garlic Clove',
       strIngredient4: 'Parsley',
@@ -404,8 +407,8 @@ const DefaultMealsAPI = {
       strIngredient4: 'Celery',
       strIngredient5: 'Carrots',
       strIngredient6: 'Garlic',
-      strIngredient7: 'Minced Beef',
-      strIngredient8: 'Tomato Puree',
+      strIngredient7: MincedBeef,
+      strIngredient8: TomatoPuree,
       strIngredient9: 'Chopped Tomatoes',
       strIngredient10: 'Honey',
       strIngredient11: 'Lasagne Sheets',
@@ -515,7 +518,7 @@ const DefaultMealsAPI = {
       strIngredient5: 'Sesame Seed Oil',
       strIngredient6: 'Carrots',
       strIngredient7: 'Celery',
-      strIngredient8: 'Spring Onions',
+      strIngredient8: SpringOnions,
       strIngredient9: 'Wonton Skin',
       strIngredient10: 'Oil',
       strIngredient11: 'Water',
@@ -728,7 +731,7 @@ const DefaultMealsAPI = {
       strMealThumb: 'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg',
       strTags: null,
       strYoutube: 'https://www.youtube.com/watch?v=C5J39YnnPsg',
-      strIngredient1: 'Minced Beef',
+      strIngredient1: MincedBeef,
       strIngredient2: 'Olive Oil',
       strIngredient3: 'Sesame Seed Burger Buns',
       strIngredient4: 'Onion',
@@ -1174,7 +1177,7 @@ const DefaultMealsAPI = {
       strIngredient4: 'Egg',
       strIngredient5: 'Parmesan',
       strIngredient6: 'Tomato',
-      strIngredient7: 'Tomato Puree',
+      strIngredient7: TomatoPuree,
       strIngredient8: 'Potatoes',
       strIngredient9: '',
       strIngredient10: '',
@@ -1283,7 +1286,7 @@ const DefaultMealsAPI = {
       strIngredient3: 'Onion',
       strIngredient4: 'Cabbage',
       strIngredient5: 'Shiitake Mushrooms',
-      strIngredient6: 'Spring Onions',
+      strIngredient6: SpringOnions,
       strIngredient7: 'Mirin',
       strIngredient8: 'Soy Sauce',
       strIngredient9: 'Caster Sugar',
@@ -1333,7 +1336,7 @@ const DefaultMealsAPI = {
       strMealThumb: 'https://www.themealdb.com/images/media/meals/hx335q1619789561.jpg',
       strTags: null,
       strYoutube: 'https://www.youtube.com/watch?v=cl4YH8wblRs',
-      strIngredient1: 'Minced Beef',
+      strIngredient1: MincedBeef,
       strIngredient2: 'Onion',
       strIngredient3: 'Eggs',
       strIngredient4: 'Chilli',
