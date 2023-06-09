@@ -67,5 +67,6 @@ describe('Meals', () => {
     // act(() => {
     //   userEvent.click(screen.getByRole('button', { name: /beef/i }));
     // });
+    // pq não funciona?
   });
 });
