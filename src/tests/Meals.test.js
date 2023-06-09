@@ -52,9 +52,9 @@ describe('Meals', () => {
   test('should render 12 food cards', async () => {
     renderWithRouterAndContext(<App />, '/meals');
     await waitFor(() => {
-      screen.getByTestId('0-recipe-card');
-      screen.getByTestId('6-recipe-card');
-      screen.getByTestId('11-recipe-card');
+      screen.getByRole('img', { name: /corba/i });
+      screen.getByRole('img', { name: /kumpir/i });
+      screen.getByRole('img', { name: /timbits/i });
     });
   });
 

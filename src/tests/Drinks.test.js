@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 // import { act } from 'react-dom/test-utils';
 // import userEvent from '@testing-library/user-event';
 import CategoryMealsAPI from './mocks/CategoryMealsAPI';
@@ -43,9 +43,17 @@ beforeEach(() => {
 
 afterEach(jest.restoreAllMocks);
 
-describe('Meals', () => {
+describe('Drinks', () => {
   test('should render component Header', () => {
     renderWithRouterAndContext(<App />, '/drinks');
     screen.getByRole('heading', { name: /drinks/i });
+  });
+
+  test('should render 12 drink cards', async () => {
+    renderWithRouterAndContext(<App />, '/drinks');
+    await waitFor(() => {
+      screen.getByRole('img', { name: /gg/i });
+      screen.getByRole('img', { name: /747/i });
+    });
   });
 });
