@@ -1,6 +1,8 @@
 const TomatoPuree = 'Tomato Puree';
 const MincedBeef = 'Minced Beef';
 const SpringOnions = 'Spring Onions';
+const GarlicClove = 'Garlic Clove';
+const VegetableOil = 'Vegetable Oil';
 
 const DefaultMealsAPI = {
   meals: [
@@ -291,15 +293,13 @@ const DefaultMealsAPI = {
       strYoutube: 'https://www.youtube.com/watch?v=mulqW-J3Yy4',
       strIngredient1: 'Broad Beans',
       strIngredient2: SpringOnions,
-      // eslint-disable-next-line sonarjs/no-duplicate-string
-      strIngredient3: 'Garlic Clove',
+      strIngredient3: GarlicClove,
       strIngredient4: 'Parsley',
       strIngredient5: 'Cumin',
       strIngredient6: 'Baking Powder',
       strIngredient7: 'Cayenne Pepper',
       strIngredient8: 'Flour',
-      // eslint-disable-next-line sonarjs/no-duplicate-string
-      strIngredient9: 'Vegetable Oil',
+      strIngredient9: VegetableOil,
       strIngredient10: '',
       strIngredient11: '',
       strIngredient12: '',
@@ -512,7 +512,7 @@ const DefaultMealsAPI = {
       strTags: 'MainMeal',
       strYoutube: 'https://www.youtube.com/watch?v=9h9No18ZyCI',
       strIngredient1: 'Pork',
-      strIngredient2: 'Garlic Clove',
+      strIngredient2: GarlicClove,
       strIngredient3: 'Ginger',
       strIngredient4: 'Soy Sauce',
       strIngredient5: 'Sesame Seed Oil',
@@ -566,7 +566,7 @@ const DefaultMealsAPI = {
       strMealThumb: 'https://www.themealdb.com/images/media/meals/uuyrrx1487327597.jpg',
       strTags: 'UnHealthy,Speciality,HangoverFood',
       strYoutube: 'https://www.youtube.com/watch?v=UVAMAoA2_WU',
-      strIngredient1: 'Vegetable Oil',
+      strIngredient1: VegetableOil,
       strIngredient2: 'Beef Gravy',
       strIngredient3: 'Potatoes',
       strIngredient4: 'Cheese Curds',
@@ -683,7 +683,7 @@ const DefaultMealsAPI = {
       strIngredient5: 'Chickpeas',
       strIngredient6: 'Onion',
       strIngredient7: 'Salt',
-      strIngredient8: 'Vegetable Oil',
+      strIngredient8: VegetableOil,
       strIngredient9: '',
       strIngredient10: '',
       strIngredient11: '',
@@ -795,7 +795,7 @@ const DefaultMealsAPI = {
       strIngredient7: 'Lemon Juice',
       strIngredient8: 'Olive Oil',
       strIngredient9: 'Greek Yogurt',
-      strIngredient10: 'Garlic Clove',
+      strIngredient10: GarlicClove,
       strIngredient11: 'Cumin',
       strIngredient12: 'Lemon Juice',
       strIngredient13: 'Lettuce',
@@ -957,7 +957,7 @@ const DefaultMealsAPI = {
       strIngredient4: 'Eggs',
       strIngredient5: 'Parsley',
       strIngredient6: 'Coriander',
-      strIngredient7: 'Vegetable Oil',
+      strIngredient7: VegetableOil,
       strIngredient8: 'Onion',
       strIngredient9: 'Coriander',
       strIngredient10: 'Curry Powder',
