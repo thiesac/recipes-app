@@ -32,7 +32,7 @@ function MyProvider({ children }) {
     setCategoryFoodData(receivedData.meals.slice(0, finalIndex));
   }, []);
 
-  // caso seja drinks, carrega botão com 5 categorias de meals
+  // caso seja drinks, carrega botão com 5 categorias de drinks
   const fetchDrinksCategoryList = useCallback(async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
     const receivedData = await response.json();
