@@ -46,13 +46,11 @@ function Recipes({ type }) {
       </>
     );
   }
-  if (type === 'drinks') {
-    return (
-      <>
-        { showDrinks() }
-      </>
-    );
-  }
+  return (
+    <>
+      { showDrinks() }
+    </>
+  );
 }
 
 Recipes.propTypes = {
