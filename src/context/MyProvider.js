@@ -8,7 +8,7 @@ function MyProvider({ children }) {
   const [categoryFoodData, setCategoryFoodData] = useState([]); // pega as 5 primeiras categorias de comida da API p/ passar pro botão
   const [categoryDrinksData, setCategoryDrinksData] = useState([]); // pega as 5 primeiras categorias de drink da API p/ passar pro botão
 
-  // pega as 12 primeiras receitas de meals ao carregar o Recipes.js
+  // pega as 12 primeiras receitas de meals ao carregar o Recipes.js    ok
   const fetchFood12 = useCallback(async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const receivedData = await response.json();
@@ -16,7 +16,7 @@ function MyProvider({ children }) {
     setFoodData(receivedData.meals.slice(0, finalIndex));
   }, []);
 
-  // pega as 12 primeiras receitas de drinks ao carregar o Recipes.js
+  // pega as 12 primeiras receitas de drinks ao carregar o Recipes.js     ok
   const fetchDrink12 = useCallback(async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const receivedData = await response.json();
@@ -24,7 +24,7 @@ function MyProvider({ children }) {
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
   }, []);
 
-  // caso seja meals, carrega botão com 5 categorias de meals
+  // caso seja meals, carrega botão com 5 categorias de meals          ok
   const fetchFoodCategoryList = useCallback(async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const receivedData = await response.json();
@@ -32,7 +32,7 @@ function MyProvider({ children }) {
     setCategoryFoodData(receivedData.meals.slice(0, finalIndex));
   }, []);
 
-  // caso seja drinks, carrega botão com 5 categorias de drinks
+  // caso seja drinks, carrega botão com 5 categorias de drinks              ok
   const fetchDrinksCategoryList = useCallback(async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
     const receivedData = await response.json();

@@ -13,9 +13,9 @@ import DrinksByCategory from './mocks/DrinksByCategory';
 
 const mockMeal = DefaultMealsAPI;
 const mockMealBtn = BtnCategoryMealsAPI;
+const mockMealCategory = MealByCategory;
 const mockDrink = DefaultDrinksAPI;
 const mockDrinkBtn = BtnCategoryDrinks;
-const mockMealCategory = MealByCategory;
 const mockDrinkCategory = DrinksByCategory;
 
 beforeEach(() => {
@@ -41,17 +41,17 @@ beforeEach(() => {
         json: () => Promise.resolve(mockDrinkBtn),
       });
     }
-    if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef') {
+    if (url.includes('https://www.themealdb.com/api/json/v1/1/filter.php?c=')) {
       return Promise.resolve({
         json: () => Promise.resolve(mockMealCategory),
       });
     }
-    if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink') {
+    if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=')) {
       return Promise.resolve({
         json: () => Promise.resolve(mockDrinkCategory),
       });
     }
-    // throw new Error('url não encontrada');
+    throw new Error('url não encontrada');
   });
 });
 
@@ -71,13 +71,33 @@ describe('Drinks', () => {
     });
   });
 
-  test('should render 12 drinks based on the clicked category', async () => {
+  test('should render 12 drinks, with filter, based on the clicked category', async () => {
     renderWithRouterAndContext(<App />, '/drinks');
     await waitFor(() => {
       const category1Btn = screen.getByRole('button', { name: /ordinary drink/i });
       expect(category1Btn).toBeInTheDocument();
     });
-    // act(() => userEvent.click(screen.getByRole('button', { name: /ordinary drink/i })));
-    // await waitFor(() => screen.getByRole('img', { name: /corba/i }));
+    act(() => userEvent.click(screen.getByRole('button', { name: /ordinary drink/i })));
+    await waitFor(() => {
+      const img = screen.getByRole('img', { name: /3-mile long island iced tea/i });
+      expect(img).toBeInTheDocument();
+    });
+  });
+
+  test('should render 12 drinks without any filter after clicking button All', async () => {
+    renderWithRouterAndContext(<App />, '/drinks');
+    await waitFor(() => {
+      const category1Btn = screen.getByRole('button', { name: /ordinary drink/i });
+      expect(category1Btn).toBeInTheDocument();
+    });
+
+    act(() => userEvent.click(screen.getByRole('button', { name: /ordinary drink/i })));
+    await waitFor(() => screen.getByRole('img', { name: /3-mile long island iced tea/i }));
+
+    act(() => userEvent.click(screen.getByRole('button', { name: /all/i })));
+    await waitFor(() => {
+      const img = screen.getByRole('img', { name: /gg/i });
+      expect(img).toBeInTheDocument();
+    });
   });
 });
