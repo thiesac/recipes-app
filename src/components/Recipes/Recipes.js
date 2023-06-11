@@ -58,3 +58,4 @@ Recipes.propTypes = {
 }.isRequired;
 
 export default Recipes;
+// 100% cobertura da tela de receitas
