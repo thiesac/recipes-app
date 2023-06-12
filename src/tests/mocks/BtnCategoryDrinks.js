@@ -1,4 +1,4 @@
-const CategoryDrinks = {
+const BtnCategoryDrinks = {
   drinks: [
     {
       strCategory: 'Ordinary Drink',
@@ -36,4 +36,4 @@ const CategoryDrinks = {
   ],
 };
 
-export default CategoryDrinks;
+export default BtnCategoryDrinks;

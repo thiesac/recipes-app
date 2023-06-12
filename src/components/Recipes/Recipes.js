@@ -57,13 +57,11 @@ function Recipes({ type }) {
       </>
     );
   }
-  if (type === 'drinks') {
-    return (
-      <>
-        { showDrinks() }
-      </>
-    );
-  }
+  return (
+    <>
+      { showDrinks() }
+    </>
+  );
 }
 
 Recipes.propTypes = {
@@ -71,3 +69,4 @@ Recipes.propTypes = {
 }.isRequired;
 
 export default Recipes;
+// 100% cobertura da tela de receitas

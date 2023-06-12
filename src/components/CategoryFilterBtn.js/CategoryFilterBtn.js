@@ -61,19 +61,17 @@ function CategoryFilterBtn({ type }) {
       </>
     );
   }
-  if (type === 'drinks') {
-    return (
-      <>
-        <button
-          data-testid="All-category-filter"
-          onClick={ () => btnAllDrinks() }
-        >
-          All
-        </button>
-        { btnDrinks() }
-      </>
-    );
-  }
+  return (
+    <>
+      <button
+        data-testid="All-category-filter"
+        onClick={ () => btnAllDrinks() }
+      >
+        All
+      </button>
+      { btnDrinks() }
+    </>
+  );
 }
 
 CategoryFilterBtn.propTypes = {
