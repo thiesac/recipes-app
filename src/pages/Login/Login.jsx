@@ -27,7 +27,7 @@ function Login() {
 
   const handleClick = () => {
     if (isFormValid) {
-      localStorage.setItem('email', email);
+      localStorage.setItem('user', email);
       history.push('/meals'); // .....................................................qual a rota????
     }
   };
