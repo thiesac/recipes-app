@@ -18,7 +18,8 @@ function FavoriteRecipes() {
   //   }
   // };
 
-  
+  const clickToUnfavorite = (id) => localStorage.setItem(favoriteRecipes
+    .filter((recipe) => recipe.id !== id), JSON.stringify(favoriteRecipes));
 
   return (
     <div>
