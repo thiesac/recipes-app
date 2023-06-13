@@ -45,6 +45,24 @@ function FavoriteRecipes() {
       >
         Drinks
       </button>
+      {
+        favoriteRecipes.map(
+          ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
+            <section key={ index }>
+              <img
+                src={ image }
+                alt={ name }
+                data-testid={ `${index}-horizontal-image` }
+              />
+              <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
+              {
+              if (type === 'meal') {
+                
+              }
+              }
+            </section>
+          ))
+      }
     </div>
   );
 }
