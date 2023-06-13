@@ -6,7 +6,7 @@ import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 
 function FavoriteRecipes() {
-  const [currFilterFav, setFilter] = useState('');
+  const [currFilterFav, setFilterFav] = useState('');
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // vem do requisito 34
 
   const copyToClipboard = async (text) => {
@@ -89,21 +89,21 @@ function FavoriteRecipes() {
       <Header />
       <button
         data-testid="filter-by-all-btn"
-        onClick={ (e) => setFilter(e.target.value) }
+        onClick={ (e) => setFilterFav(e.target.value) }
         value="all"
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
-        onClick={ (e) => setFilter(e.target.value) }
+        onClick={ (e) => setFilterFav(e.target.value) }
         value="meals"
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
-        onClick={ (e) => setFilter(e.target.value) }
+        onClick={ (e) => setFilterFav(e.target.value) }
         value="drinks"
       >
         Drinks
