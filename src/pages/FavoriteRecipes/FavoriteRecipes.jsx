@@ -1,7 +1,7 @@
 // src/pages/FavoriteRecipes/FavoriteRecipes.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import unFav from '../../images/blackHeartIcon.svg'
@@ -9,15 +9,16 @@ import unFav from '../../images/blackHeartIcon.svg'
 function FavoriteRecipes() {
   // const [currFilterFav, setFilterFav] = useState('');
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // vem do requisito 34
+  const location = useLocation();
 
-  // const copyToClipboard = async (text) => {
-  //   try {
-  //     await navigator.clipboard.writeText(text);
-  //     Swal.fire('Link copied!');
-  //   } catch (error) {
-  //     console.error('Failed to copy text:', error);
-  //   }
-  // };
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      Swal.fire('Link copied!');
+    } catch (error) {
+      console.error('Failed to copy text:', error);
+    }
+  };
 
   const clickToUnfavorite = (id) => localStorage.setItem(favoriteRecipes
     .filter((recipe) => recipe.id !== id), JSON.stringify(favoriteRecipes));
@@ -63,7 +64,11 @@ function FavoriteRecipes() {
                   <p>{ alcoholicOrNot }</p>
                 )
               }
-              <button><img src={ shareIcon } alt="Share button" /></button>
+              <button
+                onClick={ () => copyToClipboard(location.pathname) }
+              >
+                <img src={ shareIcon } alt="Share button" />
+              </button>
               <button><img src={ unFav } alt="unfavorite" /></button>
             </section>
           ),
