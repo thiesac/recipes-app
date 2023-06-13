@@ -1,50 +1,72 @@
 import React, { useContext } from 'react';
+import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import MyContext from '../../context/MyContext';
-// import { useParams } from 'react-router-dom';
 
-function Recipes() {
+function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
-  console.log(foodData);
 
+  // ao entrar na rota /meals, carrega as 12 primeiras receitas OU carrega as 12 primeiras da categoria OU carrega pesquisa do SearchBar
   const showFood = () => foodData.map(
-    ({ strMealThumb, strMeal, index }) => (
-      <div
-        data-testid={ `${index}-recipe-card` }
+    ({ strMealThumb, strMeal, idMeal }, index) => (
+      <Link
+        to={ `/meals/${idMeal}` }
         key={ strMealThumb }
       >
-        <img
-          src={ strMealThumb }
-          alt={ strMeal }
-          data-testid={ `${index}-card-img` }
-        />
-        <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
-      </div>
-    ),
-  );
-  console.log(foodData);
-  const showDrinks = () => drinkData.map(
-    ({ strDrinkThumb, strDrink, index }) => (
-      <div
-        data-testid={ `${index}-recipe-card` }
-        key={ strDrinkThumb }
-      >
-        <img
-          src={ strDrinkThumb }
-          alt={ strDrink }
-          data-testid={ `${index}-card-img` }
-        />
-        <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
-      </div>
+        <div
+          data-testid={ `${index}-recipe-card` }
+          key={ strMealThumb }
+        >
+          <img
+            src={ strMealThumb }
+            alt={ strMeal }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+        </div>
+      </Link>
     ),
   );
 
-  // const { type } = useParams
+  // ao entrar na rota /drinks, carrega ss 12 primeiras bebidas OU carrega os 12 primeiros da categoria escolhida OU carrega pesquisa do SearchBar
+  const showDrinks = () => drinkData.map(
+    ({ strDrinkThumb, strDrink, idDrink }, index) => (
+      <Link
+        to={ `/drinks/${idDrink}` }
+        key={ strDrinkThumb }
+      >
+        <div
+          data-testid={ `${index}-recipe-card` }
+          key={ strDrinkThumb }
+        >
+          <img
+            src={ strDrinkThumb }
+            alt={ strDrink }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+        </div>
+      </Link>
+    ),
+  );
+
+  if (type === 'meals') {
+    return (
+      <>
+        { showFood() }
+      </>
+    );
+  }
   return (
-    <section>
-      {showFood()}
-      {showDrinks()}
-    </section>
+    <>
+      { showDrinks() }
+    </>
   );
 }
 
+Recipes.propTypes = {
+  type: PropTypes.string,
+}.isRequired;
+
 export default Recipes;
+// 100% cobertura da tela de receitas

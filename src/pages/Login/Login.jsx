@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// src/pages/Login/Login.jsx
+
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; // ............................................qual o correto?
 
 function Login() {
@@ -10,8 +12,14 @@ function Login() {
   const checkFormValidity = (newEmail, newPassword) => {
     const minimumPasswordLength = 6;
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail);
-    setIsFormValid(isValidEmail && newPassword.length >= minimumPasswordLength);
+    setIsFormValid(isValidEmail && newPassword.length > minimumPasswordLength);
   };
+
+  useEffect(() => {
+    const minimumPasswordLength = 6;
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setIsFormValid(isValidEmail && password.length > minimumPasswordLength);
+  }, [email, password]);
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -26,10 +34,11 @@ function Login() {
   };
 
   const handleClick = () => {
-    if (isFormValid) {
-      localStorage.setItem('user', email);
-      history.push('/meals'); // ..............................................qual a rota????
-    }
+
+    /*  if (isFormValid) { */
+    localStorage.setItem('user', JSON.stringify({ email })); // salva no local storage
+    history.push('/meals'); // .....................................................qual a rota????
+    /*  } */
   };
 
   return (

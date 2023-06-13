@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 /* import rockGlass from './images/rockGlass.svg'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyProvider from './context/MyProvider';
-import Profile from './components/Profile/Profile';
+import Profile from './pages/Profile/Profile';
 import Drinks from './pages/Drinks/Drinks';
 import Meals from './pages/Meals/Meals';
 import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
