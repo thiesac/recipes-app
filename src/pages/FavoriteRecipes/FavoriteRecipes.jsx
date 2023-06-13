@@ -65,11 +65,17 @@ function FavoriteRecipes() {
                 )
               }
               <button
+                data-testid={ `${index}-horizontal-share-btn` }
                 onClick={ () => copyToClipboard(location.pathname) }
               >
                 <img src={ shareIcon } alt="Share button" />
               </button>
-              <button><img src={ unFav } alt="unfavorite" /></button>
+              <button
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                onClick={ () => clickToUnfavorite(id) }
+              >
+                <img src={ unFav } alt="unfavorite" />
+              </button>
             </section>
           ),
         )
