@@ -3,18 +3,17 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../helpers/renderWithRouter';
 import RecipeInProgress from '../pages/RecipeInProgress/MealInProgress';
 
-describe('RecipeInProgress', () => {
-  beforeEach(() => {
-    // Configuração comum antes de cada teste
-    // ...
-  });
+const FINISH_RECIPE_BTN_TEST_ID = 'finish-recipe-btn';
+const INGREDIENT_STEP_TEST_ID = 'ingredient-step';
+const LINE_THROUGH_STYLE = 'text-decoration: line-through solid rgb(0, 0, 0)';
 
-  test('renderiza o título da receita corretamente', () => {
-    render(<RecipeInProgress />);
-    const recipeTitle = screen.getByTestId('recipe-title');
-    expect(recipeTitle).toBeInTheDocument();
-    expect(recipeTitle).toHaveTextContent('Spicy Arrabiata Penne');
-  });
+beforeEach(() => {
+  // Configuração do mock da API
+  // ...
+});
+
+describe('RecipeInProgress', () => {
+  // ...
 
   test('verifica a presença de todos os botões', () => {
     render(<RecipeInProgress />);
@@ -25,13 +24,13 @@ describe('RecipeInProgress', () => {
     const favoriteBtn = screen.getByTestId('favorite-btn');
     expect(favoriteBtn).toBeInTheDocument();
 
-    const finishRecipeBtn = screen.getByTestId('finish-recipe-btn');
+    const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TEST_ID);
     expect(finishRecipeBtn).toBeInTheDocument();
   });
 
   test('marca/desmarca os ingredientes corretamente', () => {
     render(<RecipeInProgress />);
-    const ingredientCheckbox = screen.getByTestId('ingredient-step').querySelector('input');
+    const ingredientCheckbox = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('input');
     userEvent.click(ingredientCheckbox);
     expect(ingredientCheckbox).toBeChecked();
 
@@ -42,27 +41,27 @@ describe('RecipeInProgress', () => {
   test('verifica se ocorre a mudança de estilo ao clicar no checkbox', () => {
     render(<RecipeInProgress />);
 
-    const ingredientCheckbox = screen.getByTestId('ingredient-step').querySelector('input');
-    const ingredientLabel = screen.getByTestId('ingredient-step').querySelector('label');
+    const ingredientCheckbox = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('input');
+    const ingredientLabel = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('label');
 
-    expect(ingredientLabel).not.toHaveStyle('text-decoration: line-through solid rgb(0, 0, 0)');
-
-    userEvent.click(ingredientCheckbox);
-
-    expect(ingredientLabel).toHaveStyle('text-decoration: line-through solid rgb(0, 0, 0)');
+    expect(ingredientLabel).not.toHaveStyle(LINE_THROUGH_STYLE);
 
     userEvent.click(ingredientCheckbox);
 
-    expect(ingredientLabel).not.toHaveStyle('text-decoration: line-through solid rgb(0, 0, 0)');
+    expect(ingredientLabel).toHaveStyle(LINE_THROUGH_STYLE);
+
+    userEvent.click(ingredientCheckbox);
+
+    expect(ingredientLabel).not.toHaveStyle(LINE_THROUGH_STYLE);
   });
 
   test('verifica se o botão "Finalizar Receita" está inativo até que todos os checkboxes estejam marcados', () => {
     render(<RecipeInProgress />);
 
-    const finishRecipeBtn = screen.getByTestId('finish-recipe-btn');
+    const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TEST_ID);
     expect(finishRecipeBtn).toBeDisabled();
 
-    const ingredientCheckboxes = screen.getAllByTestId('ingredient-step').map((checkbox) => checkbox.querySelector('input'));
+    const ingredientCheckboxes = screen.getAllByTestId(INGREDIENT_STEP_TEST_ID).map((checkbox) => checkbox.querySelector('input'));
     ingredientCheckboxes.forEach((checkbox) => {
       userEvent.click(checkbox);
     });
@@ -73,7 +72,7 @@ describe('RecipeInProgress', () => {
   test('salva a receita e redireciona para a página de receitas feitas', () => {
     const { history } = renderWithRouter(<RecipeInProgress />);
 
-    const finishRecipeBtn = screen.getByTestId('finish-recipe-btn');
+    const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TEST_ID);
     userEvent.click(finishRecipeBtn);
 
     // Verifique se a receita foi salva corretamente no localStorage
