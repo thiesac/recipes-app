@@ -7,7 +7,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-  const history = useHistory(); // ............................................................é isso mesmo??? não podemos usar props.
+  const history = useHistory(); // .............................................................é isso mesmo??? não podemos usar props.
 
   const checkFormValidity = (newEmail, newPassword) => {
     const minimumPasswordLength = 6;
@@ -34,6 +34,7 @@ function Login() {
   };
 
   const handleClick = () => {
+
     /*  if (isFormValid) { */
     localStorage.setItem('user', JSON.stringify({ email })); // salva no local storage
     history.push('/meals'); // .....................................................qual a rota????
