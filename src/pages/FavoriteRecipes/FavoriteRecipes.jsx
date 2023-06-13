@@ -1,14 +1,20 @@
 // src/pages/FavoriteRecipes/FavoriteRecipes.jsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
-import unFav from '../../images/blackHeartIcon.svg'
+import unFav from '../../images/blackHeartIcon.svg';
+
+// useEffect(() => {
+//     localStorage.setItem("stateString", JSON.stringify(notes));
+// }, [notes]);
 
 function FavoriteRecipes() {
-  // const [currFilterFav, setFilterFav] = useState('');
+  const [currFilterFav, setFilterFav] = useState([]);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // vem do requisito 34
+  setFilterFav(favoriteRecipes);
+
   const location = useLocation();
 
   const copyToClipboard = async (text) => {
@@ -28,35 +34,36 @@ function FavoriteRecipes() {
       <Header />
       <button
         data-testid="filter-by-all-btn"
-        onClick={ (e) => setFilterFav(console.log(e.target.value)) }
-        value="all"
+        onClick={ () => setFilterFav(currFilterFav) }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
-        onClick={ (e) => setFilterFav(e.target.value) }
-        value="meals"
+        onClick={ () => setFilterFav(currFilterFav
+          .filter(({ type }) => type === 'meal')) }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
-        onClick={ (e) => setFilterFav(e.target.value) }
-        value="drinks"
+        onClick={ () => setFilterFav(currFilterFav
+          .filter(({ type }) => type === 'drink')) }
       >
         Drinks
       </button>
       {
-        favoriteRecipes.map(
+        currFilterFav.map(
           ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
             <section key={ index }>
-              <img
-                src={ image }
-                alt={ name }
-                data-testid={ `${index}-horizontal-image` }
-              />
-              <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
+              <Link to={ `/${type}s/${id}` }>
+                <img
+                  src={ image }
+                  alt={ name }
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
+              </Link>
               {
                 type === 'meal' ? (
                   <p>{ `${nationality} - ${category}` }</p>
