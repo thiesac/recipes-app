@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
+import unFav from '../../images/blackHeartIcon.svg'
 
 function FavoriteRecipes() {
   // const [currFilterFav, setFilterFav] = useState('');
@@ -56,12 +57,17 @@ function FavoriteRecipes() {
               />
               <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
               {
-              if (type === 'meal') {
-                
+                type === 'meal' ? (
+                  <p>{ `${nationality} - ${category}` }</p>
+                ) : (
+                  <p>{ alcoholicOrNot }</p>
+                )
               }
-              }
+              <button><img src={ shareIcon } alt="Share button" /></button>
+              <button><img src={ unFav } alt="unfavorite" /></button>
             </section>
-          ))
+          ),
+        )
       }
     </div>
   );
