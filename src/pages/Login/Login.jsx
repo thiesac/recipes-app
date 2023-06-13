@@ -5,7 +5,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-  const history = useHistory(); // ............................................................é isso mesmo??? não podemos usar props.
+  const history = useHistory(); // .............................................................é isso mesmo??? não podemos usar props.
 
   const checkFormValidity = (newEmail, newPassword) => {
     const minimumPasswordLength = 6;
