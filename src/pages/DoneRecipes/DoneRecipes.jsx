@@ -9,7 +9,7 @@ function DoneRecipes() {
   const [currFilter, setFilter] = useState('');
   /*
   localStorage.setItem('doneRecipes', JSON.stringify([{
-    id: 'id-da-receita',
+    id: 'id-da-eceita',
     type: 'meal',
     nationality: 'nacionalidade',
     category: 'categoria',
