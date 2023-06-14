@@ -1,16 +1,30 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
-import React, { useState, useHistory } from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 
 function DoneRecipes() {
   const [currFilter, setFilter] = useState('');
+  /*
+  localStorage.setItem('doneRecipes', JSON.stringify([{
+    id: 'id-da-receita',
+    type: 'meal',
+    nationality: 'nacionalidade',
+    category: 'categoria',
+    alcoholicOrNot: 'alcoholic',
+    name: 'nome',
+    image: 'imagem',
+    doneDate: 'quando',
+    tags: ['tag1', 'tag2'],
+  }]));
+  // const history = useHistory();
+  // const { pathname, search } = history.location;
+  // const initialURL = `${pathname}${search}`;
+*/
+
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  const history = useHistory();
-  const { pathname, search } = history.location;
-  const initialURL = `${pathname}${search}`;
 
   const copyToClipboard = async (text) => {
     try {
@@ -22,58 +36,61 @@ function DoneRecipes() {
   };
 
   const drinkCard = (drink, index) => {
-    const { strDrinkThumb, strDrink, doneDate, strAlcoholic, idDrink } = drink;
-    const detailsLink = `${initialURL}/drinks/${idDrink}`;
+    const { image, name, doneDate, alcoholicOrNot, id } = drink;
+    const detailsLink = `/drinks/${id}`;
     return (
       <div>
-        <Link to={ `/drinks/${idDrink}` }>
+        <Link to={ `/drinks/${id}` }>
           <img
-            src={ strDrinkThumb }
-            alt={ strDrink }
+            src={ image }
+            alt={ name }
             data-testid={ `${index}-horizontal-image` }
           />
-          <p data-testid={ `${index}-horizontal-name` }>{ strDrink }</p>
+          <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
         </Link>
         <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-        <p data-testid={ `${index}-horizontal-top-text` }>{ strAlcoholic }</p>
+        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <button
           data-testid={ `${index}-horizontal-share-btn` }
           onClick={ () => copyToClipboard(detailsLink) }
+          src={ shareIcon }
         >
-          <img src={ shareIcon } alt="Share button" />
+          Share
         </button>
       </div>
     );
   };
 
   const foodCard = (food, index) => {
-    const { strMealThumb, strMeal, doneDate, strArea, strCategory, strTags,
-      idMeal,
+    const { image, name, doneDate, nationality, category, tags,
+      id,
     } = food;
-    const tags = strTags.split(',');
-    const detailsLink = `${initialURL}/drinks/${idMeal}`;
+    const detailsLink = `/drinks/${id}`;
     return (
       <div>
-        <Link to={ `/drinks/${idMeal}` }>
+        <Link to={ `/drinks/${id}` }>
           <img
-            src={ strMealThumb }
-            alt={ strMeal }
+            src={ image }
+            alt={ name }
             data-testid={ `${index}-horizontal-image` }
           />
-          <p data-testid={ `${index}-horizontal-name` }>{ strMeal }</p>
+          <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
         </Link>
         <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>
-          { `${strArea} - ${strCategory}` }
+          { `${nationality} - ${category}` }
         </p>
-        <p data-testid={ `${index}-${tags[0]}-horizontal-tag` }>
-          { `${tags[0]} ${tags.length > 1 ? tags[1] : ''}` }
-        </p>
+        { tags.map((tag) => (
+          <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>
+            { tag }
+          </p>
+        ))}
         <button
           data-testid={ `${index}-horizontal-share-btn` }
           onClick={ () => copyToClipboard(detailsLink) }
+          src={ shareIcon }
         >
-          <img src={ shareIcon } alt="Share button" />
+          Share
         </button>
       </div>
     );
@@ -82,7 +99,7 @@ function DoneRecipes() {
   const showRecipes = () => {
     if (!currFilter) {
       return doneRecipes.map((recipe, i) => (
-        recipe.idDrink ? drinkCard(recipe, i) : foodCard(recipe, i)
+        recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
       ));
     } if (currFilter === 'meals') {
       return doneRecipes.map((recipe, i) => foodCard(recipe, i));
@@ -116,7 +133,7 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      { () => showRecipes() }
+      { showRecipes() }
     </div>
   );
 }
