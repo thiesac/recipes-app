@@ -1,22 +1,41 @@
-import { render, screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../helpers/renderWithRouter';
-import RecipeInProgress from '../pages/RecipeInProgress/MealInProgress';
+import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
+import App from '../App';
+// import RecipeInProgress from '../pages/RecipeInProgress/RecipeInProgress';
+import DrinksById from './mocks/DrinksById';
+import MealsById from './mocks/MealsById';
 
 const FINISH_RECIPE_BTN_TEST_ID = 'finish-recipe-btn';
 const INGREDIENT_STEP_TEST_ID = 'ingredient-step';
 const LINE_THROUGH_STYLE = 'text-decoration: line-through solid rgb(0, 0, 0)';
 
 beforeEach(() => {
-  // Configuração do mock da API
-  // ...
+  jest.spyOn(global, 'fetch');
+  global.fetch.mockImplementation((url) => {
+    if (url.includes('https://www.themealdb.com/api/json/v1/1/lookup.php?i=')) {
+      return Promise.resolve({
+        json: () => Promise.resolve(MealsById),
+      });
+    }
+    if (url.includes('www.thecocktaildb.com/api/json/v1/1/lookup.php?i=')) {
+      return Promise.resolve({
+        json: () => Promise.resolve(DrinksById),
+      });
+    }
+    throw new Error('url não encontrada');
+  });
 });
 
-describe('RecipeInProgress', () => {
-  // ...
+afterEach(() => {
+  jest.restoreAllMocks();
+  localStorage.clear();
+});
 
+describe('RecipeInProgress - Meals', () => {
   test('verifica a presença de todos os botões', () => {
-    render(<RecipeInProgress />);
+    renderWithRouterAndContext(<App />, '/meals/52771/in-progress');
 
     const shareBtn = screen.getByTestId('share-btn');
     expect(shareBtn).toBeInTheDocument();
@@ -29,7 +48,7 @@ describe('RecipeInProgress', () => {
   });
 
   test('marca/desmarca os ingredientes corretamente', () => {
-    render(<RecipeInProgress />);
+    renderWithRouterAndContext(<App />, '/meals/52771/in-progress');
     const ingredientCheckbox = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('input');
     userEvent.click(ingredientCheckbox);
     expect(ingredientCheckbox).toBeChecked();
@@ -39,8 +58,7 @@ describe('RecipeInProgress', () => {
   });
 
   test('verifica se ocorre a mudança de estilo ao clicar no checkbox', () => {
-    render(<RecipeInProgress />);
-
+    renderWithRouterAndContext(<App />, '/meals/52771/in-progress');
     const ingredientCheckbox = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('input');
     const ingredientLabel = screen.getByTestId(INGREDIENT_STEP_TEST_ID).querySelector('label');
 
@@ -56,8 +74,7 @@ describe('RecipeInProgress', () => {
   });
 
   test('verifica se o botão "Finalizar Receita" está inativo até que todos os checkboxes estejam marcados', () => {
-    render(<RecipeInProgress />);
-
+    renderWithRouterAndContext(<App />, '/meals/52771/in-progress');
     const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TEST_ID);
     expect(finishRecipeBtn).toBeDisabled();
 
@@ -70,8 +87,7 @@ describe('RecipeInProgress', () => {
   });
 
   test('salva a receita e redireciona para a página de receitas feitas', () => {
-    const { history } = renderWithRouter(<RecipeInProgress />);
-
+    renderWithRouterAndContext(<App />, '/meals/52771/in-progress');
     const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TEST_ID);
     userEvent.click(finishRecipeBtn);
 
