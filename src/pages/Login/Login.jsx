@@ -34,7 +34,6 @@ function Login() {
   };
 
   const handleClick = () => {
-
     /*  if (isFormValid) { */
     localStorage.setItem('user', JSON.stringify({ email })); // salva no local storage
     history.push('/meals'); // .....................................................qual a rota????

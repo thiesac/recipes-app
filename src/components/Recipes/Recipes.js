@@ -1,3 +1,5 @@
+// src/components/Recipes/Recipes.jsx
+
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -5,28 +7,21 @@ import MyContext from '../../context/MyContext';
 
 function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
-
   // ao entrar na rota /meals, carrega as 12 primeiras receitas OU carrega as 12 primeiras da categoria OU carrega pesquisa do SearchBar
-  const showFood = () => foodData.map(
-    ({ strMealThumb, strMeal, idMeal }, index) => (
-      <Link
-        to={ `/meals/${idMeal}` }
-        key={ strMealThumb }
-      >
-        <div
-          data-testid={ `${index}-recipe-card` }
-          key={ strMealThumb }
-        >
-          <img
-            src={ strMealThumb }
-            alt={ strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+  console.log(foodData);
+  const showFood = () => foodData.map((element, index) => {
+    const idDaReceita = element.idMeal;
+    const { strMealThumb, strMeal } = element;
+
+    return (
+      <Link to={ `/meals/${idDaReceita}` } key={ strMealThumb }>
+        <div data-testid={ `${index}-recipe-card` } key={ strMealThumb }>
+          <img src={ strMealThumb } alt={ strMeal } data-testid={ `${index}-card-img` } />
+          <p data-testid={ `${index}-card-name` }>{strMeal}</p>
         </div>
       </Link>
-    ),
-  );
+    );
+  });
 
   // ao entrar na rota /drinks, carrega ss 12 primeiras bebidas OU carrega os 12 primeiros da categoria escolhida OU carrega pesquisa do SearchBar
   const showDrinks = () => drinkData.map(
