@@ -1,0 +1,28 @@
+
+  
+  .carousel-recomend {
+
+    display: inline-flex;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+  
+  .carousel-item-recomend {
+    flex: 0 0 190px;
+    background-color: #e90a0a;
+    padding: 10px;
+    text-align: center;
+    
+  }
+  
+  .carousel-item-recomend img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+  }
+  
+  
+  
