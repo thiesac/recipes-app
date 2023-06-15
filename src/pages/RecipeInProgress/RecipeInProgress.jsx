@@ -7,6 +7,7 @@ function RecipeInProgress() {
   const { idDaReceita } = useParams();
   const location = useLocation();
   const { pathname } = location;
+
   console.log(idDaReceita);
   return (
     <div>
