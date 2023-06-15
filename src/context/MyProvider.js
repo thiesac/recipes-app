@@ -67,6 +67,20 @@ function MyProvider({ children }) {
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
   }, []);
 
+  const catchMealIdRecipes = useCallback(async (mealID) => {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`);
+    const receivedData = await response.json();
+
+    return receivedData;
+  }, []);
+
+  const catchDrinkIdRecipes = useCallback(async (drinkID) => {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkID}`);
+    const receivedData = await response.json();
+
+    return receivedData;
+  }, []);
+
   useEffect(() => {
     fetchFood12();
     fetchDrink12();
@@ -84,6 +98,8 @@ function MyProvider({ children }) {
       categoryDrinksData,
       clickCategoryFilterFood,
       clickCategoryFilterDrink,
+      catchDrinkIdRecipes,
+      catchMealIdRecipes,
     }),
     [
       foodData,
