@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
 import './Carousel.css';
 import './RecipeDetails.css';
@@ -284,22 +284,27 @@ function RecipeDetails() {
       <footer>
         {
           isRecipeSaved ? (
-            <button
-              data-testid="start-recipe-btn"
-              className="button-recipe-details"
-            >
-              Continue Recipe
-            </button>
+            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
+              <button
+                data-testid="start-recipe-btn"
+                className="button-recipe-details"
+              >
+                Continue Recipe
+              </button>
+            </Link>
           ) : (
-            <button
-              data-testid="start-recipe-btn"
-              className="button-recipe-details"
-            >
-              Start Recipe
-            </button>
+            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
+              <button
+                data-testid="start-recipe-btn"
+                className="button-recipe-details"
+              >
+                Start Recipe
+              </button>
+            </Link>
           )
         }
       </footer>
+
     </div>
 
   );
