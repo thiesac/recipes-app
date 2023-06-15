@@ -108,10 +108,10 @@ function RecipeDetails(props) {
   // copia a url para compartilhar..................................
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
-  const handleClick = () => {
-    const { history } = props;
-    history.push(`/${type}/${idDaReceita}/in-progress`);
-  }
+//  const handleClick = () => {
+//     const { history } = props;
+//     history.push(`/${type}/${idDaReceita}/in-progress`);
+//   } 
 
   return (
     <div>
