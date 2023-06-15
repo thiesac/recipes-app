@@ -1,46 +1,27 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
+import './DoneRecipes.css';
 
 function DoneRecipes() {
   const [currFilter, setFilter] = useState('');
-  /*
-  localStorage.setItem('doneRecipes', JSON.stringify([{
-    id: 'id-da-eceita',
-    type: 'meal',
-    nationality: 'nacionalidade',
-    category: 'categoria',
-    alcoholicOrNot: 'alcoholic',
-    name: 'nome',
-    image: 'imagem',
-    doneDate: 'quando',
-    tags: ['tag1', 'tag2'],
-  }]));
-  // const history = useHistory();
-  // const { pathname, search } = history.location;
-  // const initialURL = `${pathname}${search}`;
-*/
 
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   const copyToClipboard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      Swal.fire('Link copied!');
-    } catch (error) {
-      console.error('Failed to copy text:', error);
-    }
+    await navigator.clipboard.writeText(text);
+    Swal.fire('Link copied!');
   };
 
   const drinkCard = (drink, index) => {
     const { image, name, doneDate, alcoholicOrNot, id } = drink;
-    const detailsLink = `/drinks/${id}`;
+    const detailsLink = `http://localhost:3000/drinks/${id}`;
     return (
       <div>
-        <Link to={ `/drinks/${id}` }>
+        <Link to={ `drinks/${id}` }>
           <img
             src={ image }
             alt={ name }
@@ -65,14 +46,15 @@ function DoneRecipes() {
     const { image, name, doneDate, nationality, category, tags,
       id,
     } = food;
-    const detailsLink = `/drinks/${id}`;
+    const detailsLink = `http://localhost:3000/meals/${id}`;
     return (
       <div>
-        <Link to={ `/drinks/${id}` }>
+        <Link to={ `meals/${id}` }>
           <img
             src={ image }
             alt={ name }
             data-testid={ `${index}-horizontal-image` }
+            className="mealImage"
           />
           <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
         </Link>
@@ -97,15 +79,22 @@ function DoneRecipes() {
   };
 
   const showRecipes = () => {
+    if (!doneRecipes) {
+      return <p>Nenhuma receita feita</p>; // caso não exista receita feita
+    }
+
     if (!currFilter) {
       return doneRecipes.map((recipe, i) => (
         recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
       ));
     } if (currFilter === 'meals') {
-      return doneRecipes.map((recipe, i) => foodCard(recipe, i));
-    } if (currFilter === 'drinks') {
-      return doneRecipes.map((recipe, i) => drinkCard(recipe, i));
+      return doneRecipes
+        .filter(({ type }) => type === 'meal')
+        .map((recipe, i) => foodCard(recipe, i));
     }
+    return doneRecipes
+      .filter(({ type }) => type === 'drink')
+      .map((recipe, i) => drinkCard(recipe, i));
   };
 
   return (
@@ -114,7 +103,7 @@ function DoneRecipes() {
       <p>Done Recipes</p>
       <button
         data-testid="filter-by-all-btn"
-        onClick={ (e) => setFilter(e.target.value) }
+        onClick={ () => setFilter('') }
         value="all"
       >
         All
