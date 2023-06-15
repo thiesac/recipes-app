@@ -37,19 +37,32 @@ function RecipeDetails() {
     getRecommendations();
   }, [catchDrinkIdRecipes, catchMealIdRecipes, idDaReceita,
     type, setData, drinkData, foodData]);
-  console.log(type, recomend.slice(0, six));
+  // console.log(type, recomend.slice(0, six));
+
+  const checkRecipeInProgress = () => {
+    const recipesInLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (recipesInLocalStorage) {
+      if (recipesInLocalStorage.meals && recipesInLocalStorage.meals[idDaReceita]) {
+        return true;
+      }
+      return recipesInLocalStorage.drinks && recipesInLocalStorage.drinks[idDaReceita];
+    }
+  };
+  const isRecipeSaved = checkRecipeInProgress();
+
   return (
     <div>
-      {type === 'meals' && data.meals && data.meals.map((element, index) => {
+      { type === 'meals' && data.meals && data.meals.map((element, index) => {
         const ingredients = Object.entries(element)
           .filter(([key, value]) => key
             .startsWith('strIngredient')
-          && value !== '' && value !== null)
+            && value !== '' && value !== null)
           .map((entry) => entry[1]);
         const measure = Object.entries(element)
           .filter(([key, value]) => key
             .startsWith('strMeasure')
-          && value !== '' && value !== null)
+            && value !== '' && value !== null)
           .map((entry) => entry[1]);
         return (
           <div key={ index }>
@@ -58,19 +71,19 @@ function RecipeDetails() {
               alt={ element.strMeal }
               data-testid="recipe-photo"
             />
-            <h1 data-testid="recipe-title">{element.strMeal}</h1>
-            <p data-testid="recipe-category">{element.strCategory}</p>
-            {ingredients.map((e, i) => (
+            <h1 data-testid="recipe-title">{ element.strMeal }</h1>
+            <p data-testid="recipe-category">{ element.strCategory }</p>
+            { ingredients.map((e, i) => (
               <div key={ i }>
                 <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  {e}
+                  { e }
                 </p>
                 <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  {measure[i]}
+                  { measure[i] }
                 </p>
               </div>
-            ))}
-            {element.strYoutube !== null && (
+            )) }
+            { element.strYoutube !== null && (
               <iframe
                 width="560"
                 height="315"
@@ -81,12 +94,12 @@ function RecipeDetails() {
                 title={ element.strMeal }
                 data-testid="video"
               />
-            )}
-            <p data-testid="instructions">{element.strInstructions}</p>
+            ) }
+            <p data-testid="instructions">{ element.strInstructions }</p>
           </div>
         );
-      })}
-      {type === 'drinks' && data.drinks && data.drinks.map((element, index) => {
+      }) }
+      { type === 'drinks' && data.drinks && data.drinks.map((element, index) => {
         const ingredients = Object.entries(element)
           .filter(([key, value]) => key
             .startsWith('strIngredient' || 'strMeasure1')
@@ -95,7 +108,7 @@ function RecipeDetails() {
         const measure = Object.entries(element)
           .filter(([key, value]) => key
             .startsWith('strMeasure')
-          && value !== '' && value !== null)
+            && value !== '' && value !== null)
           .map((entry) => entry[1]);
         return (
           <div key={ index }>
@@ -104,53 +117,64 @@ function RecipeDetails() {
               alt={ element.strDrink }
               data-testid="recipe-photo"
             />
-            <h1 data-testid="recipe-title">{element.strDrink}</h1>
+            <h1 data-testid="recipe-title">{ element.strDrink }</h1>
             <p data-testid="recipe-category">
-              {element.strAlcoholic === null ? element.strCategory : element.strAlcoholic}
+              { element.strAlcoholic === null ? element.strCategory : element.strAlcoholic }
             </p>
-            {ingredients.map((e, i) => (
+            { ingredients.map((e, i) => (
               <div key={ i }>
                 <p
                   data-testid={ `${i}-ingredient-name-and-measure` }
                 >
-                  {e}
+                  { e }
                 </p>
                 <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  {measure[i]}
+                  { measure[i] }
                 </p>
               </div>
-            ))}
-            <p data-testid="instructions">{element.strInstructions}</p>
+            )) }
+            <p data-testid="instructions">{ element.strInstructions }</p>
           </div>
         );
-      })}
+      }) }
       <div className="carousel-recomend">
-        {recomend
-        && recomend.slice(0, six).map((item, index) => (
-          <div
-            data-testid={ `${index}-recommendation-card` }
-            key={ index }
-            className="carousel-item-recomend"
-          >
-            <img
-              src={ type === 'drinks' ? item.strMealThumb : item.strDrinkThumb }
-              alt={ type === 'drinks' ? 'drink' : 'meal' }
-            />
-            <p
-              data-testid={ `${index}-recommendation-title` }
+        { recomend
+          && recomend.slice(0, six).map((item, index) => (
+            <div
+              data-testid={ `${index}-recommendation-card` }
+              key={ index }
+              className="carousel-item-recomend"
             >
-              { type === 'drinks' ? item.strMeal : item.strDrink }
-            </p>
-          </div>
-        ))}
+              <img
+                src={ type === 'drinks' ? item.strMealThumb : item.strDrinkThumb }
+                alt={ type === 'drinks' ? 'drink' : 'meal' }
+              />
+              <p
+                data-testid={ `${index}-recommendation-title` }
+              >
+                { type === 'drinks' ? item.strMeal : item.strDrink }
+              </p>
+            </div>
+          )) }
       </div>
       <footer>
-        <button
-          data-testid="start-recipe-btn"
-          className="button-recipe-details"
-        >
-          Start Recipe
-        </button>
+        {
+          isRecipeSaved ? (
+            <button
+              data-testid="start-recipe-btn"
+              className="button-recipe-details"
+            >
+              Continue Recipe
+            </button>
+          ) : (
+            <button
+              data-testid="start-recipe-btn"
+              className="button-recipe-details"
+            >
+              Start Recipe
+            </button>
+          )
+        }
       </footer>
 
     </div>
