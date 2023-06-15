@@ -2,7 +2,7 @@
 
 import React from 'react';
 /* import './App.css'; */
-import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route, Switch } from 'react-router-dom';
 /* import rockGlass from './images/rockGlass.svg'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyProvider from './context/MyProvider';
@@ -31,12 +31,12 @@ function App() {
           <Route exact path="/drinks/:id-da-receita" component="" />
           <Route
             exact
-            path="/meals/:id-da-receita/in-progress"
+            path="/meals/52771/in-progress"
             component={ RecipeInProgress }
           />
           <Route
             exact
-            path="/drinks/:id-da-receita/in-progress"
+            path="/drinks/178319/in-progress"
             component={ RecipeInProgress }
           />
           <Route exact path="/profile" component={ Profile } />

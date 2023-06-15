@@ -14,6 +14,7 @@ function renderWithRouterAndContext(component, path = '/') {
         </Router>
       </Provider>,
     ),
+    history, // modificado por delio
   };
 }
 
