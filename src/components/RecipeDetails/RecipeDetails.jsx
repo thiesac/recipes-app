@@ -67,7 +67,7 @@ function RecipeDetails() {
 
   // adiciona e retira dos favoritos MEALS
   const MealshandleFavoritarClick = () => {
-    MealshandleFavoriteRecipeClick(foodData);
+    MealshandleFavoriteRecipeClick(data);
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -88,7 +88,7 @@ function RecipeDetails() {
   const [DrinkFavorite, setDrinkFavorite] = useState(false);
 
   const DrinkhandleFavoritarClick = () => {
-    DrinkshandleFavoriteRecipeClick(drinkData);
+    DrinkshandleFavoriteRecipeClick(data);
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
