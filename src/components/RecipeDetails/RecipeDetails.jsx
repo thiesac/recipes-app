@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
 import './Carousel.css';
 import './RecipeDetails.css';
-import { MealshandleShareClick,
-  MealshandleFavoriteRecipeClick } from './MealsDetailsUtils';
-import { DrinkshandleShareClick,
-  DrinkshandleFavoriteRecipeClick } from './DrinksDetails';
+import {
+  MealshandleShareClick,
+  MealshandleFavoriteRecipeClick,
+} from './MealsDetailsUtils';
+import {
+  DrinkshandleShareClick,
+  DrinkshandleFavoriteRecipeClick,
+} from './DrinksDetails';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
@@ -84,7 +88,7 @@ function RecipeDetails() {
   const [DrinkFavorite, setDrinkFavorite] = useState(false);
 
   const DrinkhandleFavoritarClick = () => {
-    DrinkshandleFavoriteRecipeClick(recipeData);
+    DrinkshandleFavoriteRecipeClick(drinkData);
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -133,18 +137,18 @@ function RecipeDetails() {
               } }
             >
               <img src={ shareIcon } alt="icone" />
-            Compartilhar
+              Compartilhar
             </button>
 
-            {isLinkCopied && (
+            { isLinkCopied && (
               <p>Link copied!</p>
-            )}
+            ) }
 
             <button
               type="button"
               onClick={ MealshandleFavoritarClick }
             >
-              {isFavorite ? (
+              { MealFavorite ? (
                 <img
                   src={ blackHeartIcon }
                   alt="Favorito"
@@ -156,8 +160,8 @@ function RecipeDetails() {
                   alt="Não favorito"
                   data-testid="favorite-btn"
                 />
-              )}
-            Favorito
+              ) }
+              Favorito
             </button>
             <p data-testid="recipe-category">{ element.strCategory }</p>
             { ingredients.map((e, i) => (
@@ -213,18 +217,16 @@ function RecipeDetails() {
               } }
             >
               <img src={ shareIcon } alt="icone" />
-            Compartilhar
+              Compartilhar
             </button>
-
-            {isLinkCopied && (
+            { isLinkCopied && (
               <p>Link copied!</p>
-            )}
-
+            ) }
             <button
               type="button"
               onClick={ DrinkhandleFavoritarClick }
             >
-              {isFavorite ? (
+              { DrinkFavorite ? (
                 <img
                   src={ blackHeartIcon }
                   alt="Favorito"
@@ -236,8 +238,8 @@ function RecipeDetails() {
                   alt="Não favorito"
                   data-testid="favorite-btn"
                 />
-              )}
-            Favorito
+              ) }
+              Favorito
             </button>
             <p data-testid="recipe-category">
               { element.strAlcoholic === null ? element
@@ -298,7 +300,6 @@ function RecipeDetails() {
           )
         }
       </footer>
-
     </div>
 
   );

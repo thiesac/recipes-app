@@ -22,18 +22,21 @@ function App() {
           <Route exact path="/" component={ Login } />
           <Route exact path="/meals" component={ Meals } />
           <Route exact path="/drinks" component={ Drinks } />
-          <Route exact path="/meals/:id-da-receita" component="" />
-          <Route exact path="/drinks/:id-da-receita" component="" />
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route
-            path="/(meals|drinks)/:id-da-receita"
+            path="/(meals|drinks)/:idDaReceita"
             component={ RecipeDetails }
           />
           <Route
             exact
-            path="/(meals|drinks)/:id-da-receita/in-progress"
+            path="/meals/:idDaReceita/in-progress"
+            component={ RecipeInProgress }
+          />
+          <Route
+            exact
+            path="/drinks/:idDaReceita/in-progress"
             component={ RecipeInProgress }
           />
         </Switch>
