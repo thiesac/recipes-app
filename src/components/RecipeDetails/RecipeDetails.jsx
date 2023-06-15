@@ -119,7 +119,8 @@ function RecipeDetails() {
             />
             <h1 data-testid="recipe-title">{ element.strDrink }</h1>
             <p data-testid="recipe-category">
-              { element.strAlcoholic === null ? element.strCategory : element.strAlcoholic }
+              { element.strAlcoholic === null ? element
+                .strCategory : element.strAlcoholic }
             </p>
             { ingredients.map((e, i) => (
               <div key={ i }>
