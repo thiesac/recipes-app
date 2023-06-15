@@ -3,6 +3,13 @@ import { useParams } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
 import './Carousel.css';
 import './RecipeDetails.css';
+import { MealshandleShareClick,
+  MealshandleFavoriteRecipeClick } from './MealsDetailsUtils';
+import { DrinkshandleShareClick,
+  DrinkshandleFavoriteRecipeClick } from './DrinksDetails';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import shareIcon from '../../images/searchIcon.svg';
 
 const six = 6;
 function RecipeDetails() {
@@ -51,6 +58,52 @@ function RecipeDetails() {
   };
   const isRecipeSaved = checkRecipeInProgress();
 
+  // cria estado de comida favoritada ou não.....................
+  const [MealFavorite, setMealFavorite] = useState(false);
+
+  // adiciona e retira dos favoritos MEALS
+  const MealshandleFavoritarClick = () => {
+    MealshandleFavoriteRecipeClick(foodData);
+
+    // muda o ícone favorito
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
+
+    setMealFavorite(isRecipeFavorite);
+  };
+
+  useEffect(() => {
+    // muda o ícone favorito
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
+
+    setMealFavorite(isRecipeFavorite);
+  }, [MealFavorite]);
+
+  // adiciona e retira dos favoritos drinks ..............................
+  const [DrinkFavorite, setDrinkFavorite] = useState(false);
+
+  const DrinkhandleFavoritarClick = () => {
+    DrinkshandleFavoriteRecipeClick(recipeData);
+
+    // muda o ícone favorito
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
+
+    setDrinkFavorite(isRecipeFavorite);
+  };
+
+  useEffect(() => {
+    // muda o ícone favorito
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
+
+    setDrinkFavorite(isRecipeFavorite);
+  }, [DrinkFavorite]);
+
+  // copia a url para compartilhar..................................
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+
   return (
     <div>
       { type === 'meals' && data.meals && data.meals.map((element, index) => {
@@ -72,6 +125,40 @@ function RecipeDetails() {
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">{ element.strMeal }</h1>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => {
+                MealshandleShareClick(setIsLinkCopied, idDaReceita);
+              } }
+            >
+              <img src={ shareIcon } alt="icone" />
+            Compartilhar
+            </button>
+
+            {isLinkCopied && (
+              <p>Link copied!</p>
+            )}
+
+            <button
+              type="button"
+              onClick={ MealshandleFavoritarClick }
+            >
+              {isFavorite ? (
+                <img
+                  src={ blackHeartIcon }
+                  alt="Favorito"
+                  data-testid="favorite-btn"
+                />
+              ) : (
+                <img
+                  src={ whiteHeartIcon }
+                  alt="Não favorito"
+                  data-testid="favorite-btn"
+                />
+              )}
+            Favorito
+            </button>
             <p data-testid="recipe-category">{ element.strCategory }</p>
             { ingredients.map((e, i) => (
               <div key={ i }>
@@ -118,6 +205,40 @@ function RecipeDetails() {
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">{ element.strDrink }</h1>
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => {
+                DrinkshandleShareClick(setIsLinkCopied, idDaReceita);
+              } }
+            >
+              <img src={ shareIcon } alt="icone" />
+            Compartilhar
+            </button>
+
+            {isLinkCopied && (
+              <p>Link copied!</p>
+            )}
+
+            <button
+              type="button"
+              onClick={ DrinkhandleFavoritarClick }
+            >
+              {isFavorite ? (
+                <img
+                  src={ blackHeartIcon }
+                  alt="Favorito"
+                  data-testid="favorite-btn"
+                />
+              ) : (
+                <img
+                  src={ whiteHeartIcon }
+                  alt="Não favorito"
+                  data-testid="favorite-btn"
+                />
+              )}
+            Favorito
+            </button>
             <p data-testid="recipe-category">
               { element.strAlcoholic === null ? element
                 .strCategory : element.strAlcoholic }
