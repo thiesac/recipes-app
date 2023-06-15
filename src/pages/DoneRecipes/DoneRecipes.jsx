@@ -1,4 +1,5 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
+
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
@@ -41,15 +42,11 @@ function DoneRecipes() {
     return (
       <div>
         <Link to={ `/drinks/${id}` }>
-          <img
-            src={ image }
-            alt={ name }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
+          <img src={ image } alt={ name } data-testid={ `${index}-horizontal-image` } />
+          <p data-testid={ `${index}-horizontal-name` }>{name}</p>
         </Link>
-        <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
+        <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+        <p data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</p>
         <button
           data-testid={ `${index}-horizontal-share-btn` }
           onClick={ () => copyToClipboard(detailsLink) }
@@ -62,27 +59,21 @@ function DoneRecipes() {
   };
 
   const foodCard = (food, index) => {
-    const { image, name, doneDate, nationality, category, tags,
-      id,
-    } = food;
+    const { image, name, doneDate, nationality, category, tags, id } = food;
     const detailsLink = `/drinks/${id}`;
     return (
       <div>
         <Link to={ `/drinks/${id}` }>
-          <img
-            src={ image }
-            alt={ name }
-            data-testid={ `${index}-horizontal-image` }
-          />
-          <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
+          <img src={ image } alt={ name } data-testid={ `${index}-horizontal-image` } />
+          <p data-testid={ `${index}-horizontal-name` }>{name}</p>
         </Link>
-        <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
+        <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
         <p data-testid={ `${index}-horizontal-top-text` }>
-          { `${nationality} - ${category}` }
+          {`${nationality} - ${category}`}
         </p>
-        { tags.map((tag) => (
+        {tags.map((tag) => (
           <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>
-            { tag }
+            {tag}
           </p>
         ))}
         <button
@@ -97,15 +88,25 @@ function DoneRecipes() {
   };
 
   const showRecipes = () => {
+    if (!doneRecipes) {
+      return <p>Nenhuma receita feita</p>; // caso não exista receita feita
+    }
+
     if (!currFilter) {
-      return doneRecipes.map((recipe, i) => (
-        recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
-      ));
-    } if (currFilter === 'meals') {
+      return doneRecipes.map((recipe, i) => (recipe.type
+        // eslint
+        === 'drink'
+        ? drinkCard(recipe, i)
+        : foodCard(recipe, i)));
+    }
+    if (currFilter === 'meals') {
       return doneRecipes.map((recipe, i) => foodCard(recipe, i));
-    } if (currFilter === 'drinks') {
+    }
+    if (currFilter === 'drinks') {
       return doneRecipes.map((recipe, i) => drinkCard(recipe, i));
     }
+
+    return null;
   };
 
   return (
@@ -133,7 +134,7 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      { showRecipes() }
+      {showRecipes()}
     </div>
   );
 }

@@ -11,8 +11,8 @@ import unFav from '../../images/blackHeartIcon.svg';
 // }, [notes]);
 
 function FavoriteRecipes() {
-  const [currFilterFav, setFilterFav] = useState([]);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // vem do requisito 34
+  const [currFilterFav, setFilterFav] = useState(favoriteRecipes || []); // retorna valor nulo caso não tenha recipes favoritados
   setFilterFav(favoriteRecipes);
 
   const location = useLocation();
@@ -26,67 +26,73 @@ function FavoriteRecipes() {
     }
   };
 
-  const clickToUnfavorite = (id) => localStorage.setItem(favoriteRecipes
-    .filter((recipe) => recipe.id !== id), JSON.stringify(favoriteRecipes));
+  const clickToUnfavorite = (id) => localStorage.setItem(
+    favoriteRecipes.filter((recipe) => recipe.id !== id),
+    JSON.stringify(favoriteRecipes),
+  );
 
   return (
     <div>
       <Header />
       <button
         data-testid="filter-by-all-btn"
+        // eslint
         onClick={ () => setFilterFav(currFilterFav) }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
-        onClick={ () => setFilterFav(currFilterFav
-          .filter(({ type }) => type === 'meal')) }
+        onClick={ () => setFilterFav(
+          currFilterFav
+          // eslint
+            .filter(({ type }) => type === 'meal'),
+        ) }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
-        onClick={ () => setFilterFav(currFilterFav
-          .filter(({ type }) => type === 'drink')) }
+        onClick={ () => setFilterFav(
+          currFilterFav
+          // eslint
+            .filter(({ type }) => type === 'drink'),
+        ) }
       >
         Drinks
       </button>
-      {
-        currFilterFav.map(
-          ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
-            <section key={ index }>
-              <Link to={ `/${type}s/${id}` }>
-                <img
-                  src={ image }
-                  alt={ name }
-                  data-testid={ `${index}-horizontal-image` }
-                />
-                <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
-              </Link>
-              {
-                type === 'meal' ? (
-                  <p>{ `${nationality} - ${category}` }</p>
-                ) : (
-                  <p>{ alcoholicOrNot }</p>
-                )
-              }
-              <button
-                data-testid={ `${index}-horizontal-share-btn` }
-                onClick={ () => copyToClipboard(location.pathname) }
-              >
-                <img src={ shareIcon } alt="Share button" />
-              </button>
-              <button
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                onClick={ () => clickToUnfavorite(id) }
-              >
-                <img src={ unFav } alt="unfavorite" />
-              </button>
-            </section>
-          ),
-        )
-      }
+      {currFilterFav.map(
+        ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
+          <section key={ index }>
+            <Link to={ `/${type}s/${id}` }>
+              <img
+                src={ image }
+                alt={ name }
+                // eslint
+                data-testid={ `${index}-horizontal-image` }
+              />
+              <span data-testid={ `${index}-horizontal-name` }>{name}</span>
+            </Link>
+            {type === 'meal' ? (
+              <p>{`${nationality} - ${category}`}</p>
+            ) : (
+              <p>{alcoholicOrNot}</p>
+            )}
+            <button
+              data-testid={ `${index}-horizontal-share-btn` }
+              onClick={ () => copyToClipboard(location.pathname) }
+            >
+              <img src={ shareIcon } alt="Share button" />
+            </button>
+            <button
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              onClick={ () => clickToUnfavorite(id) }
+            >
+              <img src={ unFav } alt="unfavorite" />
+            </button>
+          </section>
+        ),
+      )}
     </div>
   );
 }
