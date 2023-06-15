@@ -62,7 +62,7 @@ function RecipeDetails() {
   };
   const isRecipeSaved = checkRecipeInProgress();
 
-  // cria estado de comida favoritada ou não.....................
+  // cria estado de comida favoritada ou não........ .............
   const [MealFavorite, setMealFavorite] = useState(false);
 
   // adiciona e retira dos favoritos MEALS
