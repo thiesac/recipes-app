@@ -14,7 +14,7 @@ function FavoriteRecipes() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || []; // vem do requisito 34 // retorna valor nulo caso não tenha recipes favoritados
   const [currFilterFav, setFilterFav] = useState(favoriteRecipes);
   const location = useLocation();
-
+console.log(favoriteRecipes)
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -83,7 +83,11 @@ function FavoriteRecipes() {
                 <span data-testid={ `${index}-horizontal-name` }>{name}</span>
               </Link>
               {type === 'meal' ? (
-                <p>{`${nationality} - ${category}`}</p>
+                <p
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { `${nationality} - ${category}` }
+                </p>
               ) : (
                 <p>{alcoholicOrNot}</p>
               )}
