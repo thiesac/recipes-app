@@ -3,15 +3,17 @@ import React, { useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DrinksgetIngredientList,
+import {
+  DrinksgetIngredientList,
   DrinkshandleFinishRecipeClick,
   DrinkshandleFavoriteRecipeClick,
-  handleShareClick } from './DrinksrecipeUtils';
+  handleShareClick,
+} from './DrinksrecipeUtils';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
 
-function MealInProgress({ id }) {
+function MealInProgress({ idDaReceita }) {
   // define o estado local onde será guardado as informações que vem da API
   const [recipeData, setRecipeData] = useState(null);
 
@@ -26,7 +28,7 @@ function MealInProgress({ id }) {
     const fetchRecipeData = async () => {
       try {
         const response = await
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`);
         const data = await response.json();
         setRecipeData(data);
       } catch (error) {
@@ -35,7 +37,7 @@ function MealInProgress({ id }) {
     };
 
     fetchRecipeData();
-  }, [id]);
+  }, [idDaReceita]);
 
   // verifica se há receitas em progresso salvas no localStorage e atualiza o estado local.
   useEffect(() => {
@@ -73,7 +75,7 @@ function MealInProgress({ id }) {
       ...prevInProgressRecipes,
       drinks: {
         ...prevInProgressRecipes.drinks,
-        [id]: updatedIndices,
+        [idDaReceita]: updatedIndices,
       },
     }));
   };
@@ -90,8 +92,8 @@ function MealInProgress({ id }) {
     const savedIndices = localStorage.getItem('inProgressRecipes');
     if (savedIndices) {
       const parsedSavedIndices = JSON.parse(savedIndices);
-      if (parsedSavedIndices.drinks && parsedSavedIndices.drinks[id]) {
-        setCheckedIndices(parsedSavedIndices.drinks[id]);
+      if (parsedSavedIndices.drinks && parsedSavedIndices.drinks[idDaReceita]) {
+        setCheckedIndices(parsedSavedIndices.drinks[idDaReceita]);
       }
     }
   }, [isFirstRender]);
@@ -112,7 +114,8 @@ function MealInProgress({ id }) {
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.idDaReceita === idDaReceita);
 
     setIsFavorite(isRecipeFavorite);
   };
@@ -120,7 +123,8 @@ function MealInProgress({ id }) {
   useEffect(() => {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.idDaReceita === idDaReceita);
 
     setIsFavorite(isRecipeFavorite);
   }, [isFavorite]);
@@ -131,34 +135,34 @@ function MealInProgress({ id }) {
   return (
     <div>
       <p>Receita sendo feita</p>
-      {recipeData?.drinks && (
+      { recipeData?.drinks && (
         <>
           <img
             src={ recipeData.drinks[0].strDrinkThumb }
             alt="foto da receita"
             data-testid="recipe-photo"
           />
-          <h1 data-testid="recipe-title">{recipeData.drinks[0].strDrink}</h1>
+          <h1 data-testid="recipe-title">{ recipeData.drinks[0].strDrink }</h1>
           <button
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              handleShareClick(setIsLinkCopied, id);
+              handleShareClick(setIsLinkCopied, idDaReceita);
             } }
           >
             <img src={ shareIcon } alt="icone" />
             Compartilhar
           </button>
 
-          {isLinkCopied && (
+          { isLinkCopied && (
             <p>Link copied!</p>
-          )}
+          ) }
 
           <button
             type="button"
             onClick={ handleFavoritarClick }
           >
-            {isFavorite ? (
+            { isFavorite ? (
               <img
                 src={ blackHeartIcon }
                 alt="Favorito"
@@ -170,18 +174,18 @@ function MealInProgress({ id }) {
                 alt="Não favorito"
                 data-testid="favorite-btn"
               />
-            )}
+            ) }
             Favorito
           </button>
 
-          <div data-testid="recipe-category">{recipeData.drinks[0].strCategory}</div>
+          <div data-testid="recipe-category">{ recipeData.drinks[0].strCategory }</div>
 
-          <div>{recipeData.drinks[0].strAlcoholic}</div>
+          <div>{ recipeData.drinks[0].strAlcoholic }</div>
 
-          <div data-testid="instructions">{recipeData.drinks[0].strInstructions}</div>
+          <div data-testid="instructions">{ recipeData.drinks[0].strInstructions }</div>
           <h2>Ingredientes:</h2>
           <div>
-            {ingredientList.map((item, index) => (
+            { ingredientList.map((item, index) => (
               <div key={ index }>
                 <label
                   data-testid={ `${index}-ingredient-step` }
@@ -203,14 +207,14 @@ function MealInProgress({ id }) {
                     } }
                   />
                   <span>
-                    {item.ingredient}
+                    { item.ingredient }
                     :
-                    {' '}
-                    {item.measure}
+                    { ' ' }
+                    { item.measure }
                   </span>
                 </label>
               </div>
-            ))}
+            )) }
           </div>
           <Link to="/done-recipes">
             <button
@@ -223,13 +227,13 @@ function MealInProgress({ id }) {
             </button>
           </Link>
         </>
-      )}
+      ) }
     </div>
   );
 }
 
 MealInProgress.propTypes = {
-  id: PropTypes.string.isRequired,
+  idDaReceita: PropTypes.string.isRequired,
 };
 
 export default MealInProgress;

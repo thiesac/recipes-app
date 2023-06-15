@@ -11,7 +11,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
 
-function MealInProgress({ id }) {
+function MealInProgress({ idDaReceita }) {
   // define o estado local onde será guardado as informações que vem da API
   const [recipeData, setRecipeData] = useState(null);
 
@@ -25,7 +25,7 @@ function MealInProgress({ id }) {
   useEffect(() => {
     const fetchRecipeData = async () => {
       try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`);
         const data = await response.json();
         setRecipeData(data);
       } catch (error) {
@@ -34,7 +34,7 @@ function MealInProgress({ id }) {
     };
 
     fetchRecipeData();
-  }, [id]);
+  }, [idDaReceita]);
 
   // verifica se há receitas em progresso salvas no localStorage e atualiza o estado local.
   useEffect(() => {
@@ -72,7 +72,7 @@ function MealInProgress({ id }) {
       ...prevInProgressRecipes,
       meals: {
         ...prevInProgressRecipes.meals,
-        [id]: updatedIndices,
+        [idDaReceita]: updatedIndices,
       },
     }));
   };
@@ -89,8 +89,8 @@ function MealInProgress({ id }) {
     const savedIndices = localStorage.getItem('inProgressRecipes');
     if (savedIndices) {
       const parsedSavedIndices = JSON.parse(savedIndices);
-      if (parsedSavedIndices.meals && parsedSavedIndices.meals[id]) {
-        setCheckedIndices(parsedSavedIndices.meals[id]);
+      if (parsedSavedIndices.meals && parsedSavedIndices.meals[idDaReceita]) {
+        setCheckedIndices(parsedSavedIndices.meals[idDaReceita]);
       }
     }
   }, [isFirstRender]);
@@ -111,7 +111,8 @@ function MealInProgress({ id }) {
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.idDaReceita === idDaReceita);
 
     setIsFavorite(isRecipeFavorite);
   };
@@ -119,7 +120,8 @@ function MealInProgress({ id }) {
   useEffect(() => {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.idDaReceita === idDaReceita);
 
     setIsFavorite(isRecipeFavorite);
   }, [isFavorite]);
@@ -142,7 +144,7 @@ function MealInProgress({ id }) {
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              handleShareClick(setIsLinkCopied, id);
+              handleShareClick(setIsLinkCopied, idDaReceita);
             } }
           >
             <img src={ shareIcon } alt="icone" />
@@ -226,7 +228,7 @@ function MealInProgress({ id }) {
 }
 
 MealInProgress.propTypes = {
-  id: PropTypes.string.isRequired,
+  idDaReceita: PropTypes.string.isRequired,
 };
 
 export default MealInProgress;

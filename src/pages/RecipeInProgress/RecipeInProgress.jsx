@@ -4,14 +4,15 @@ import MealInProgress from './MealInProgress';
 import DrinkInProgress from './DrinkInProgress';
 
 function RecipeInProgress() {
-  const { id } = useParams();
+  const { idDaReceita } = useParams();
   const location = useLocation();
   const { pathname } = location;
-
+  console.log(idDaReceita);
   return (
     <div>
-      {pathname.includes('/meals/') && <MealInProgress id={ id } />}
-      {pathname.includes('/drinks/') && <DrinkInProgress id={ id } />}
+      <h1>OIEEEE</h1>
+      { pathname.includes('/meals/') && <MealInProgress id={ idDaReceita } /> }
+      { pathname.includes('/drinks/') && <DrinkInProgress id={ idDaReceita } /> }
     </div>
   );
 }

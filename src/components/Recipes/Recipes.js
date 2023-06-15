@@ -8,7 +8,7 @@ import MyContext from '../../context/MyContext';
 function Recipes({ type }) {
   const { foodData, drinkData } = useContext(MyContext);
   // ao entrar na rota /meals, carrega as 12 primeiras receitas OU carrega as 12 primeiras da categoria OU carrega pesquisa do SearchBar
-  console.log(foodData);
+
   const showFood = () => foodData.map((element, index) => {
     const idDaReceita = element.idMeal;
     const { strMealThumb, strMeal } = element;
