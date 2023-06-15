@@ -1,3 +1,5 @@
+// src/context/MyProvider.js
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
@@ -8,7 +10,7 @@ function MyProvider({ children }) {
   const [categoryFoodData, setCategoryFoodData] = useState([]); // pega as 5 primeiras categorias de comida da API p/ passar pro botão
   const [categoryDrinksData, setCategoryDrinksData] = useState([]); // pega as 5 primeiras categorias de drink da API p/ passar pro botão
 
-  // pega as 12 primeiras receitas de meals ao carregar o Recipes.js
+  // pega as 12 primeiras receitas de meals ao carregar o Recipes.js    ok
   const fetchFood12 = useCallback(async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const receivedData = await response.json();
@@ -16,25 +18,31 @@ function MyProvider({ children }) {
     setFoodData(receivedData.meals.slice(0, finalIndex));
   }, []);
 
-  // pega as 12 primeiras receitas de drinks ao carregar o Recipes.js
+  // pega as 12 primeiras receitas de drinks ao carregar o Recipes.js     ok
   const fetchDrink12 = useCallback(async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await fetch(
+      'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
+    );
     const receivedData = await response.json();
     const finalIndex = 12;
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
   }, []);
 
-  // caso seja meals, carrega botão com 5 categorias de meals
+  // caso seja meals, carrega botão com 5 categorias de meals          ok
   const fetchFoodCategoryList = useCallback(async () => {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    const response = await fetch(
+      'https://www.themealdb.com/api/json/v1/1/list.php?c=list',
+    );
     const receivedData = await response.json();
     const finalIndex = 5;
     setCategoryFoodData(receivedData.meals.slice(0, finalIndex));
   }, []);
 
-  // caso seja drinks, carrega botão com 5 categorias de meals
+  // caso seja drinks, carrega botão com 5 categorias de drinks              ok
   const fetchDrinksCategoryList = useCallback(async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    const response = await fetch(
+      'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
+    );
     const receivedData = await response.json();
     const finalIndex = 5;
     setCategoryDrinksData(receivedData.drinks.slice(0, finalIndex));
@@ -42,17 +50,35 @@ function MyProvider({ children }) {
 
   // ao clicar em um filtro de categoria de meals, exibe as 12 primeiras receitas da categoria
   const clickCategoryFilterFood = useCallback(async (category) => {
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
+    );
     const receivedData = await response.json();
     const finalIndex = 12;
-    setFoodData(receivedData.meals.slice(0, finalIndex));
+    setFoodData(receivedData.meals?.slice(0, finalIndex) || []); // adicionado verificação se receivedData.meals e nulo ou não pois estava dando erro no browser
   }, []);
 
   const clickCategoryFilterDrink = useCallback(async (category) => {
-    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+    const response = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`,
+    );
     const receivedData = await response.json();
     const finalIndex = 12;
     setDrinkData(receivedData.drinks.slice(0, finalIndex));
+  }, []);
+
+  const catchMealIdRecipes = useCallback(async (mealID) => {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`);
+    const receivedData = await response.json();
+
+    return receivedData;
+  }, []);
+
+  const catchDrinkIdRecipes = useCallback(async (drinkID) => {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkID}`);
+    const receivedData = await response.json();
+
+    return receivedData;
   }, []);
 
   useEffect(() => {
@@ -72,14 +98,22 @@ function MyProvider({ children }) {
       categoryDrinksData,
       clickCategoryFilterFood,
       clickCategoryFilterDrink,
+      catchDrinkIdRecipes,
+      catchMealIdRecipes,
     }),
-    [foodData, drinkData, categoryFoodData,
-      categoryDrinksData, clickCategoryFilterFood,
-      clickCategoryFilterDrink, setDrinkData, setFoodData,
+    [
+      foodData,
+      drinkData,
+      categoryFoodData,
+      categoryDrinksData,
+      clickCategoryFilterFood,
+      clickCategoryFilterDrink,
+      setDrinkData,
+      setFoodData,
     ],
   );
 
-  return <MyContext.Provider value={ values }>{ children }</MyContext.Provider>;
+  return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;
 }
 
 MyProvider.propTypes = {

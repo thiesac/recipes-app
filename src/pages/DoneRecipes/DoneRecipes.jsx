@@ -1,4 +1,5 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2';
@@ -21,6 +22,7 @@ function DoneRecipes() {
     const detailsLink = `http://localhost:3000/drinks/${id}`;
     return (
       <div>
+
         <Link to={ `drinks/${id}` }>
           <img
             src={ image }
@@ -29,8 +31,8 @@ function DoneRecipes() {
           />
           <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
         </Link>
-        <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
+        <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+        <p data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</p>
         <button
           data-testid={ `${index}-horizontal-share-btn` }
           onClick={ () => copyToClipboard(detailsLink) }
@@ -43,6 +45,7 @@ function DoneRecipes() {
   };
 
   const foodCard = (food, index) => {
+
     const { image, name, doneDate, nationality, category, tags,
       id,
     } = food;
@@ -58,13 +61,13 @@ function DoneRecipes() {
           />
           <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
         </Link>
-        <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
+        <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
         <p data-testid={ `${index}-horizontal-top-text` }>
-          { `${nationality} - ${category}` }
+          {`${nationality} - ${category}`}
         </p>
-        { tags.map((tag) => (
+        {tags.map((tag) => (
           <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>
-            { tag }
+            {tag}
           </p>
         ))}
         <button
@@ -84,6 +87,7 @@ function DoneRecipes() {
     }
 
     if (!currFilter) {
+
       return doneRecipes.map((recipe, i) => (
         recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
       ));
@@ -95,6 +99,7 @@ function DoneRecipes() {
     return doneRecipes
       .filter(({ type }) => type === 'drink')
       .map((recipe, i) => drinkCard(recipe, i));
+
   };
 
   return (
@@ -122,9 +127,10 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      { showRecipes() }
+      {showRecipes()}
     </div>
   );
 }
 
 export default DoneRecipes;
+// abrindo PR
