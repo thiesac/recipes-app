@@ -45,7 +45,6 @@ function DoneRecipes() {
   };
 
   const foodCard = (food, index) => {
-
     const { image, name, doneDate, nationality, category, tags,
       id,
     } = food;
@@ -87,7 +86,6 @@ function DoneRecipes() {
     }
 
     if (!currFilter) {
-
       return doneRecipes.map((recipe, i) => (
         recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
       ));
@@ -99,7 +97,6 @@ function DoneRecipes() {
     return doneRecipes
       .filter(({ type }) => type === 'drink')
       .map((recipe, i) => drinkCard(recipe, i));
-
   };
 
   return (
