@@ -26,6 +26,7 @@ function App() {
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route
+            exact
             path="/(meals|drinks)/:idDaReceita"
             component={ RecipeDetails }
           />
