@@ -1,7 +1,7 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
