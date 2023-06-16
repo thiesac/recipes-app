@@ -14,7 +14,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
 import Recomendations from './Recomendations';
-import Footer from './Footer';
+import FooterDetails from './FooterDetails';
 
 function RecipeDetails() {
   const { catchMealIdRecipes,
@@ -239,7 +239,7 @@ function RecipeDetails() {
         );
       }) }
       <Recomendations recomend={ recomend } type={ type } />
-      <Footer
+      <FooterDetails
         isRecipeSaved={ isRecipeSaved }
         type={ type }
         idDaReceita={ idDaReceita }

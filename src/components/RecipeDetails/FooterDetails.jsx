@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Footer({ isRecipeSaved, type, idDaReceita }) {
+function FooterDetails({ isRecipeSaved, type, idDaReceita }) {
   return (
     <div>
       <footer>
@@ -32,10 +32,10 @@ function Footer({ isRecipeSaved, type, idDaReceita }) {
   );
 }
 
-Footer.propTypes = {
+FooterDetails.propTypes = {
   isRecipeSaved: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
   idDaReceita: PropTypes.number.isRequired,
 };
 
-export default Footer;
+export default FooterDetails;
