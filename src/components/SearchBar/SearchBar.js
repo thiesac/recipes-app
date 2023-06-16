@@ -8,7 +8,7 @@ function SearchBar() {
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const history = useHistory();
-
+  // 80% po***
   const onSearchClick = async () => {
     if (searchType === 'first-letter' && searchInput.length > 1) {
       global.alert('Your search must have only 1 (one) character');
