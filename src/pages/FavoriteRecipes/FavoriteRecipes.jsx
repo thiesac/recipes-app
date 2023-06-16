@@ -1,27 +1,19 @@
 // src/pages/FavoriteRecipes/FavoriteRecipes.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import unFav from '../../images/blackHeartIcon.svg';
 
-// useEffect(() => {
-//     localStorage.setItem("stateString", JSON.stringify(notes));
-// }, [notes]);
-
 function FavoriteRecipes() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || []; // vem do requisito 34 // retorna valor nulo caso não tenha recipes favoritados
   const [currFilterFav, setFilterFav] = useState(favoriteRecipes);
-  const location = useLocation();
-console.log(favoriteRecipes)
+  // const location = useLocation();
+  console.log(favoriteRecipes);
   const copyToClipboard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      Swal.fire('Link copied!');
-    } catch (error) {
-      console.error('Failed to copy text:', error);
-    }
+    await navigator.clipboard.writeText(text);
+    Swal.fire('Link copied!');
   };
 
   const clickToUnfavorite = (id) => {
@@ -52,7 +44,7 @@ console.log(favoriteRecipes)
         data-testid="filter-by-meal-btn"
         onClick={ () => setFilterFav(
           currFilterFav
-          // eslint
+            // eslint
             .filter(({ type }) => type === 'meal'),
         ) }
       >
@@ -62,13 +54,13 @@ console.log(favoriteRecipes)
         data-testid="filter-by-drink-btn"
         onClick={ () => setFilterFav(
           currFilterFav
-          // eslint
+            // eslint
             .filter(({ type }) => type === 'drink'),
         ) }
       >
         Drinks
       </button>
-      {currFilterFav && currFilterFav.length > 0 ? (
+      { currFilterFav && currFilterFav.length > 0 ? (
         // Verifica se currFilterFav existe e tem um comprimento maior que zero
         currFilterFav.map(
           ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
@@ -80,20 +72,20 @@ console.log(favoriteRecipes)
                   // eslint
                   data-testid={ `${index}-horizontal-image` }
                 />
-                <span data-testid={ `${index}-horizontal-name` }>{name}</span>
+                <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
               </Link>
-              {type === 'meal' ? (
+              { type === 'meal' ? (
                 <p
                   data-testid={ `${index}-horizontal-top-text` }
                 >
                   { `${nationality} - ${category}` }
                 </p>
               ) : (
-                <p>{alcoholicOrNot}</p>
-              )}
+                <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
+              ) }
               <button
                 data-testid={ `${index}-horizontal-share-btn` }
-                onClick={ () => copyToClipboard(location.pathname) }
+                onClick={ () => copyToClipboard(`http://localhost:3000/${type}s/${id}`) }
               >
                 <img src={ shareIcon } alt="Share button" />
               </button>
@@ -109,19 +101,9 @@ console.log(favoriteRecipes)
       ) : (
         // Caso currFilterFav seja nulo ou vazio, exibe uma mensagem indicando que nenhuma receita favorita foi encontrada
         <p>No favorite recipes found.</p>
-      )}
+      ) }
     </div>
   );
 }
 
 export default FavoriteRecipes;
-
-// [{
-//   id: id - da - receita,
-//   type: meal - ou - drink,
-//   nationality: nacionalidade - da - receita - ou - texto - vazio,
-//   category: categoria - da - receita - ou - texto - vazio,
-//   alcoholicOrNot: alcoholic - ou - non - alcoholic - ou - texto - vazio,
-//   name: nome - da - receita,
-//   image: imagem - da - receita
-// }]

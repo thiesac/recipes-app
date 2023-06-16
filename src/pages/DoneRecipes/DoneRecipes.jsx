@@ -1,7 +1,7 @@
 // src/pages/DoneRecipes/DoneRecipes.jsx
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
@@ -45,7 +45,6 @@ function DoneRecipes() {
   };
 
   const foodCard = (food, index) => {
-
     const { image, name, doneDate, nationality, category, tags,
       id,
     } = food;
@@ -87,7 +86,6 @@ function DoneRecipes() {
     }
 
     if (!currFilter) {
-
       return doneRecipes.map((recipe, i) => (
         recipe.type === 'drink' ? drinkCard(recipe, i) : foodCard(recipe, i)
       ));
@@ -99,7 +97,6 @@ function DoneRecipes() {
     return doneRecipes
       .filter(({ type }) => type === 'drink')
       .map((recipe, i) => drinkCard(recipe, i));
-
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
 
 function Recipes({ type }) {
