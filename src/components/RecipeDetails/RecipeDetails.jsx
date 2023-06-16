@@ -16,7 +16,7 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
 
 const six = 6;
-function RecipeDetails() {
+function RecipeDetails(props) {
   const { catchMealIdRecipes,
     catchDrinkIdRecipes, drinkData,
     foodData,
@@ -107,6 +107,11 @@ function RecipeDetails() {
 
   // copia a url para compartilhar..................................
   const [isLinkCopied, setIsLinkCopied] = useState(false);
+
+//  const handleClick = () => {
+//     const { history } = props;
+//     history.push(`/${type}/${idDaReceita}/in-progress`);
+//   } 
 
   return (
     <div>

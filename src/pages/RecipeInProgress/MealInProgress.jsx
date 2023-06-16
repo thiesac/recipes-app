@@ -111,7 +111,8 @@ function MealInProgress({ id }) {
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   };
@@ -119,7 +120,8 @@ function MealInProgress({ id }) {
   useEffect(() => {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   }, [isFavorite]);

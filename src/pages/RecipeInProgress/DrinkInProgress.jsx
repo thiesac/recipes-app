@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DrinksgetIngredientList,
+import {
+  DrinksgetIngredientList,
   DrinkshandleFinishRecipeClick,
   DrinkshandleFavoriteRecipeClick,
-  handleShareClick } from './DrinksrecipeUtils';
+  handleShareClick,
+} from './DrinksrecipeUtils';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
@@ -112,7 +114,8 @@ function MealInProgress({ id }) {
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   };
@@ -120,7 +123,8 @@ function MealInProgress({ id }) {
   useEffect(() => {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const isRecipeFavorite = favoriteRecipes
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   }, [isFavorite]);
@@ -131,14 +135,14 @@ function MealInProgress({ id }) {
   return (
     <div>
       <p>Receita sendo feita</p>
-      {recipeData?.drinks && (
+      { recipeData?.drinks && (
         <>
           <img
             src={ recipeData.drinks[0].strDrinkThumb }
             alt="foto da receita"
             data-testid="recipe-photo"
           />
-          <h1 data-testid="recipe-title">{recipeData.drinks[0].strDrink}</h1>
+          <h1 data-testid="recipe-title">{ recipeData.drinks[0].strDrink }</h1>
           <button
             type="button"
             data-testid="share-btn"
@@ -150,15 +154,15 @@ function MealInProgress({ id }) {
             Compartilhar
           </button>
 
-          {isLinkCopied && (
+          { isLinkCopied && (
             <p>Link copied!</p>
-          )}
+          ) }
 
           <button
             type="button"
             onClick={ handleFavoritarClick }
           >
-            {isFavorite ? (
+            { isFavorite ? (
               <img
                 src={ blackHeartIcon }
                 alt="Favorito"
@@ -170,18 +174,18 @@ function MealInProgress({ id }) {
                 alt="Não favorito"
                 data-testid="favorite-btn"
               />
-            )}
+            ) }
             Favorito
           </button>
 
-          <div data-testid="recipe-category">{recipeData.drinks[0].strCategory}</div>
+          <div data-testid="recipe-category">{ recipeData.drinks[0].strCategory }</div>
 
-          <div>{recipeData.drinks[0].strAlcoholic}</div>
+          <div>{ recipeData.drinks[0].strAlcoholic }</div>
 
-          <div data-testid="instructions">{recipeData.drinks[0].strInstructions}</div>
+          <div data-testid="instructions">{ recipeData.drinks[0].strInstructions }</div>
           <h2>Ingredientes:</h2>
           <div>
-            {ingredientList.map((item, index) => (
+            { ingredientList.map((item, index) => (
               <div key={ index }>
                 <label
                   data-testid={ `${index}-ingredient-step` }
@@ -203,14 +207,14 @@ function MealInProgress({ id }) {
                     } }
                   />
                   <span>
-                    {item.ingredient}
+                    { item.ingredient }
                     :
-                    {' '}
-                    {item.measure}
+                    { ' ' }
+                    { item.measure }
                   </span>
                 </label>
               </div>
-            ))}
+            )) }
           </div>
           <Link to="/done-recipes">
             <button
@@ -223,7 +227,7 @@ function MealInProgress({ id }) {
             </button>
           </Link>
         </>
-      )}
+      ) }
     </div>
   );
 }
@@ -233,3 +237,4 @@ MealInProgress.propTypes = {
 };
 
 export default MealInProgress;
+// a
