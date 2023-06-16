@@ -85,11 +85,6 @@ function RecipeDetails() {
   }, [DrinkFavorite, idDaReceita]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
-//  const handleClick = () => {
-//     const { history } = props;
-//     history.push(`/${type}/${idDaReceita}/in-progress`);
-//   } 
-
   return (
     <div>
       { type === 'meals' && data.meals && data.meals.map((element, index) => {
