@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
 import './Carousel.css';
 import './RecipeDetails.css';
@@ -62,12 +62,12 @@ function RecipeDetails(props) {
   };
   const isRecipeSaved = checkRecipeInProgress();
 
-  // cria estado de comida favoritada ou não.....................
+  // cria estado de comida favoritada ou não........ .............
   const [MealFavorite, setMealFavorite] = useState(false);
 
   // adiciona e retira dos favoritos MEALS
   const MealshandleFavoritarClick = () => {
-    MealshandleFavoriteRecipeClick(foodData);
+    MealshandleFavoriteRecipeClick(data);
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -88,7 +88,7 @@ function RecipeDetails(props) {
   const [DrinkFavorite, setDrinkFavorite] = useState(false);
 
   const DrinkhandleFavoritarClick = () => {
-    DrinkshandleFavoriteRecipeClick(drinkData);
+    DrinkshandleFavoriteRecipeClick(data);
 
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -289,23 +289,27 @@ function RecipeDetails(props) {
       <footer>
         {
           isRecipeSaved ? (
-            <button
-              data-testid="start-recipe-btn"
-              className="button-recipe-details"
-            >
-              Continue Recipe
-            </button>
+            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
+              <button
+                data-testid="start-recipe-btn"
+                className="button-recipe-details"
+              >
+                Continue Recipe
+              </button>
+            </Link>
           ) : (
-            <button
-              data-testid="start-recipe-btn"
-              className="button-recipe-details"
-              onClick={ () => handleClick() }
-            >
-              Start Recipe
-            </button>
+            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
+              <button
+                data-testid="start-recipe-btn"
+                className="button-recipe-details"
+              >
+                Start Recipe
+              </button>
+            </Link>
           )
         }
       </footer>
+
     </div>
 
   );
