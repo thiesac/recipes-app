@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MyContext from '../../context/MyContext';
-import './Carousel.css';
 import './RecipeDetails.css';
 import {
   MealshandleShareClick,
@@ -14,9 +13,10 @@ import {
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
+import Recomendations from './Recomendations';
+import Footer from './Footer';
 
-const six = 6;
-function RecipeDetails(props) {
+function RecipeDetails() {
   const { catchMealIdRecipes,
     catchDrinkIdRecipes, drinkData,
     foodData,
@@ -48,8 +48,6 @@ function RecipeDetails(props) {
     getRecommendations();
   }, [catchDrinkIdRecipes, catchMealIdRecipes, idDaReceita,
     type, setData, drinkData, foodData]);
-  // console.log(type, recomend.slice(0, six));
-
   const checkRecipeInProgress = () => {
     const recipesInLocalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
@@ -61,51 +59,30 @@ function RecipeDetails(props) {
     }
   };
   const isRecipeSaved = checkRecipeInProgress();
-
-  // cria estado de comida favoritada ou não........ .............
   const [MealFavorite, setMealFavorite] = useState(false);
-
-  // adiciona e retira dos favoritos MEALS
   const MealshandleFavoritarClick = () => {
     MealshandleFavoriteRecipeClick(data);
-
-    // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
-
     setMealFavorite(isRecipeFavorite);
   };
-
   useEffect(() => {
-    // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
-
     setMealFavorite(isRecipeFavorite);
-  }, [MealFavorite]);
-
-  // adiciona e retira dos favoritos drinks ..............................
+  }, [MealFavorite, idDaReceita]);
   const [DrinkFavorite, setDrinkFavorite] = useState(false);
-
   const DrinkhandleFavoritarClick = () => {
     DrinkshandleFavoriteRecipeClick(data);
-
-    // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
-
     setDrinkFavorite(isRecipeFavorite);
   };
-
   useEffect(() => {
-    // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes.some((recipe) => recipe.id === idDaReceita);
-
     setDrinkFavorite(isRecipeFavorite);
-  }, [DrinkFavorite]);
-
-  // copia a url para compartilhar..................................
+  }, [DrinkFavorite, idDaReceita]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
 //  const handleClick = () => {
@@ -266,52 +243,13 @@ function RecipeDetails(props) {
           </div>
         );
       }) }
-      <div className="carousel-recomend">
-        { recomend
-          && recomend.slice(0, six).map((item, index) => (
-            <div
-              data-testid={ `${index}-recommendation-card` }
-              key={ index }
-              className="carousel-item-recomend"
-            >
-              <img
-                src={ type === 'drinks' ? item.strMealThumb : item.strDrinkThumb }
-                alt={ type === 'drinks' ? 'drink' : 'meal' }
-              />
-              <p
-                data-testid={ `${index}-recommendation-title` }
-              >
-                { type === 'drinks' ? item.strMeal : item.strDrink }
-              </p>
-            </div>
-          )) }
-      </div>
-      <footer>
-        {
-          isRecipeSaved ? (
-            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
-              <button
-                data-testid="start-recipe-btn"
-                className="button-recipe-details"
-              >
-                Continue Recipe
-              </button>
-            </Link>
-          ) : (
-            <Link to={ `/${type}/${idDaReceita}/in-progress` }>
-              <button
-                data-testid="start-recipe-btn"
-                className="button-recipe-details"
-              >
-                Start Recipe
-              </button>
-            </Link>
-          )
-        }
-      </footer>
-
+      <Recomendations recomend={ recomend } type={ type } />
+      <Footer
+        isRecipeSaved={ isRecipeSaved }
+        type={ type }
+        idDaReceita={ idDaReceita }
+      />
     </div>
-
   );
 }
 export default RecipeDetails;

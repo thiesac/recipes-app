@@ -101,16 +101,9 @@ function MyProvider({ children }) {
       catchDrinkIdRecipes,
       catchMealIdRecipes,
     }),
-    [
-      foodData,
-      drinkData,
-      categoryFoodData,
-      categoryDrinksData,
-      clickCategoryFilterFood,
-      clickCategoryFilterDrink,
-      setDrinkData,
-      setFoodData,
-    ],
+    [foodData, drinkData, categoryFoodData,
+      categoryDrinksData, clickCategoryFilterFood,
+      clickCategoryFilterDrink, catchDrinkIdRecipes, catchMealIdRecipes],
   );
 
   return <MyContext.Provider value={ values }>{children}</MyContext.Provider>;

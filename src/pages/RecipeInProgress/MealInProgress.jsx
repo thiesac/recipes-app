@@ -93,7 +93,7 @@ function MealInProgress({ id }) {
         setCheckedIndices(parsedSavedIndices.meals[id]);
       }
     }
-  }, [isFirstRender]);
+  }, [id, isFirstRender]);
 
   const isAllIngredientsChecked = checkedIndices.length === ingredientList.length;
 
@@ -124,7 +124,7 @@ function MealInProgress({ id }) {
       .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
-  }, [isFavorite]);
+  }, [id, isFavorite]);
 
   // copia a url para compartilhar
   const [isLinkCopied, setIsLinkCopied] = useState(false);
