@@ -11,7 +11,6 @@ function RecipeInProgress() {
   console.log(idDaReceita);
   return (
     <div>
-      <h1>OIEEEE</h1>
       { pathname.includes('/meals/') && <MealInProgress id={ idDaReceita } /> }
       { pathname.includes('/drinks/') && <DrinkInProgress id={ idDaReceita } /> }
     </div>

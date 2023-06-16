@@ -13,7 +13,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/searchIcon.svg';
 
-function MealInProgress({ idDaReceita }) {
+function MealInProgress({ id }) {
   // define o estado local onde será guardado as informações que vem da API
   const [recipeData, setRecipeData] = useState(null);
 
@@ -28,7 +28,7 @@ function MealInProgress({ idDaReceita }) {
     const fetchRecipeData = async () => {
       try {
         const response = await
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDaReceita}`);
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
         const data = await response.json();
         setRecipeData(data);
       } catch (error) {
@@ -37,7 +37,7 @@ function MealInProgress({ idDaReceita }) {
     };
 
     fetchRecipeData();
-  }, [idDaReceita]);
+  }, [id]);
 
   // verifica se há receitas em progresso salvas no localStorage e atualiza o estado local.
   useEffect(() => {
@@ -75,7 +75,7 @@ function MealInProgress({ idDaReceita }) {
       ...prevInProgressRecipes,
       drinks: {
         ...prevInProgressRecipes.drinks,
-        [idDaReceita]: updatedIndices,
+        [id]: updatedIndices,
       },
     }));
   };
@@ -92,8 +92,8 @@ function MealInProgress({ idDaReceita }) {
     const savedIndices = localStorage.getItem('inProgressRecipes');
     if (savedIndices) {
       const parsedSavedIndices = JSON.parse(savedIndices);
-      if (parsedSavedIndices.drinks && parsedSavedIndices.drinks[idDaReceita]) {
-        setCheckedIndices(parsedSavedIndices.drinks[idDaReceita]);
+      if (parsedSavedIndices.drinks && parsedSavedIndices.drinks[id]) {
+        setCheckedIndices(parsedSavedIndices.drinks[id]);
       }
     }
   }, [isFirstRender]);
@@ -115,7 +115,7 @@ function MealInProgress({ idDaReceita }) {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes
-      .some((recipe) => recipe.idDaReceita === idDaReceita);
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   };
@@ -124,7 +124,7 @@ function MealInProgress({ idDaReceita }) {
     // muda o ícone favorito
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isRecipeFavorite = favoriteRecipes
-      .some((recipe) => recipe.idDaReceita === idDaReceita);
+      .some((recipe) => recipe.id === id);
 
     setIsFavorite(isRecipeFavorite);
   }, [isFavorite]);
@@ -147,7 +147,7 @@ function MealInProgress({ idDaReceita }) {
             type="button"
             data-testid="share-btn"
             onClick={ () => {
-              handleShareClick(setIsLinkCopied, idDaReceita);
+              handleShareClick(setIsLinkCopied, id);
             } }
           >
             <img src={ shareIcon } alt="icone" />
@@ -233,7 +233,7 @@ function MealInProgress({ idDaReceita }) {
 }
 
 MealInProgress.propTypes = {
-  idDaReceita: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default MealInProgress;
