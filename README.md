@@ -20,7 +20,7 @@ The Recipes App is a web application for storing, managing, and sharing your fav
 - Browse and search recipes.
 - Filter recipes by category, cuisine, and ingredients.
 - Like and comment on recipes.
-- Responsive design for mobile and desktop use.
+- Designed specifically for a fixed screen size of 360 x 640.
 
 
 ## Installation
