@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { ListGroup, Card } from 'react-bootstrap';
 import MyContext from '../../context/MyContext';
 import './RecipeDetails.css';
 import {
@@ -12,7 +13,7 @@ import {
 } from './DrinksDetails';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-import shareIcon from '../../images/searchIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
 import Recomendations from './Recomendations';
 import FooterDetails from './FooterDetails';
 
@@ -86,7 +87,7 @@ function RecipeDetails() {
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
   return (
-    <div>
+    <div className="d-flex flex-column align-items-center justify-content-center">
       { type === 'meals' && data.meals && data.meals.map((element, index) => {
         const ingredients = Object.entries(element)
           .filter(([key, value]) => key
@@ -99,72 +100,63 @@ function RecipeDetails() {
             && value !== '' && value !== null)
           .map((entry) => entry[1]);
         return (
-          <div key={ index }>
-            <img
+          <Card key={ index } style={ { width: '20rem' } }>
+            <Card.Img
               src={ element.strMealThumb }
               alt={ element.strMeal }
               data-testid="recipe-photo"
             />
-            <h1 data-testid="recipe-title">{ element.strMeal }</h1>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {
-                MealshandleShareClick(setIsLinkCopied, idDaReceita);
-              } }
-            >
-              <img src={ shareIcon } alt="icone" />
-              Compartilhar
-            </button>
+            <Card.Title data-testid="recipe-title">{ element.strMeal }</Card.Title>
+            <Card.Body>
+              <button
+                type="button"
+                data-testid="share-btn"
+                onClick={ () => {
+                  MealshandleShareClick(setIsLinkCopied, idDaReceita);
+                } }
+              >
+                <img src={ shareIcon } alt="icone" />
+                Compartilhar
+              </button>
 
-            { isLinkCopied && (
-              <p>Link copied!</p>
-            ) }
-
-            <button
-              type="button"
-              onClick={ MealshandleFavoritarClick }
-            >
-              { MealFavorite ? (
-                <img
-                  src={ blackHeartIcon }
-                  alt="Favorito"
-                  data-testid="favorite-btn"
-                />
-              ) : (
-                <img
-                  src={ whiteHeartIcon }
-                  alt="Não favorito"
-                  data-testid="favorite-btn"
-                />
+              { isLinkCopied && (
+                <p>Link copied!</p>
               ) }
-              Favorito
-            </button>
-            <p data-testid="recipe-category">{ element.strCategory }</p>
-            { ingredients.map((e, i) => (
-              <div key={ i }>
-                <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  { e }
-                </p>
-                <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  { measure[i] }
-                </p>
-              </div>
-            )) }
-            { element.strYoutube !== null && (
-              <iframe
-                width="560"
-                height="315"
-                src={ element.strYoutube }
-                allow="accelerometer; autoplay; encrypted-media;
-          gyroscope; picture-in-picture"
-                allowFullScreen
-                title={ element.strMeal }
-                data-testid="video"
-              />
-            ) }
-            <p data-testid="instructions">{ element.strInstructions }</p>
-          </div>
+
+              <button
+                type="button"
+                onClick={ MealshandleFavoritarClick }
+              >
+                { MealFavorite ? (
+                  <img
+                    src={ blackHeartIcon }
+                    alt="Favorito"
+                    data-testid="favorite-btn"
+                  />
+                ) : (
+                  <img
+                    src={ whiteHeartIcon }
+                    alt="Não favorito"
+                    data-testid="favorite-btn"
+                  />
+                ) }
+                Favorito
+              </button>
+            </Card.Body>
+            <ListGroup>
+              <ListGroup.Item data-testid="recipe-category">
+                { element.strCategory }
+              </ListGroup.Item>
+              { ingredients.map((e, i) => (
+                <div key={ i }>
+                  <ListGroup.Item>
+                    { `${e} - ${measure[i]}` }
+                  </ListGroup.Item>
+                </div>
+              )) }
+            </ListGroup>
+            <Card.Body data-testid="instructions">{ element.strInstructions }</Card.Body>
+          </Card>
         );
       }) }
       { type === 'drinks' && data.drinks && data.drinks.map((element, index) => {
@@ -179,63 +171,66 @@ function RecipeDetails() {
             && value !== '' && value !== null)
           .map((entry) => entry[1]);
         return (
-          <div key={ index }>
-            <img
+          <Card key={ index } style={ { width: '20rem' } }>
+            <Card.Img
               src={ element.strDrinkThumb }
               alt={ element.strDrink }
               data-testid="recipe-photo"
             />
-            <h1 data-testid="recipe-title">{ element.strDrink }</h1>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {
-                DrinkshandleShareClick(setIsLinkCopied, idDaReceita);
-              } }
-            >
-              <img src={ shareIcon } alt="icone" />
-              Compartilhar
-            </button>
-            { isLinkCopied && (
-              <p>Link copied!</p>
-            ) }
-            <button
-              type="button"
-              onClick={ DrinkhandleFavoritarClick }
-            >
-              { DrinkFavorite ? (
-                <img
-                  src={ blackHeartIcon }
-                  alt="Favorito"
-                  data-testid="favorite-btn"
-                />
-              ) : (
-                <img
-                  src={ whiteHeartIcon }
-                  alt="Não favorito"
-                  data-testid="favorite-btn"
-                />
+            <Card.Title data-testid="recipe-title">{ element.strDrink }</Card.Title>
+            <Card.Body>
+              <button
+                type="button"
+                data-testid="share-btn"
+                onClick={ () => {
+                  DrinkshandleShareClick(setIsLinkCopied, idDaReceita);
+                } }
+              >
+                <img src={ shareIcon } alt="icone" />
+                Share
+              </button>
+              { isLinkCopied && (
+                <p>Link copied!</p>
               ) }
-              Favorito
-            </button>
-            <p data-testid="recipe-category">
-              { element.strAlcoholic === null ? element
-                .strCategory : element.strAlcoholic }
-            </p>
-            { ingredients.map((e, i) => (
-              <div key={ i }>
-                <p
-                  data-testid={ `${i}-ingredient-name-and-measure` }
-                >
-                  { e }
-                </p>
-                <p data-testid={ `${i}-ingredient-name-and-measure` }>
-                  { measure[i] }
-                </p>
-              </div>
-            )) }
-            <p data-testid="instructions">{ element.strInstructions }</p>
-          </div>
+              <button
+                type="button"
+                onClick={ DrinkhandleFavoritarClick }
+              >
+                { DrinkFavorite ? (
+                  <img
+                    src={ blackHeartIcon }
+                    alt="Favorito"
+                    data-testid="favorite-btn"
+                  />
+                ) : (
+                  <img
+                    src={ whiteHeartIcon }
+                    alt="Não favorito"
+                    data-testid="favorite-btn"
+                  />
+                ) }
+                Favorite
+              </button>
+            </Card.Body>
+            <ListGroup>
+              <ListGroup.Item data-testid="recipe-category">
+                { element.strAlcoholic === null ? element
+                  .strCategory : element.strAlcoholic }
+              </ListGroup.Item>
+              { ingredients.map((e, i) => (
+                <div key={ i }>
+                  <ListGroup.Item
+                    data-testid={ `${i}-ingredient-name-and-measure` }
+                  >
+                    { `${e} - ${measure[i]}` }
+                  </ListGroup.Item>
+                </div>
+              )) }
+              <Card.Body data-testid="instructions">
+                { element.strInstructions }
+              </Card.Body>
+            </ListGroup>
+          </Card>
         );
       }) }
       <Recomendations recomend={ recomend } type={ type } />

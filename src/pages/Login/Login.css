@@ -1,0 +1,21 @@
+.login-container {
+  background-attachment: fixed;
+  background-image: url('../../images/login.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.yellow-title {
+  color: yellow;
+  font-size: 2rem;
+  margin: 0;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.white-label {
+  color: white;
+  font: 500;
+}

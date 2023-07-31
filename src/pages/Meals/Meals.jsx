@@ -10,9 +10,9 @@ function Meals() {
   return (
     <div>
       <Header />
-      <Footer />
       <CategoryFilterBtn type="meals" />
       <Recipes type="meals" />
+      <Footer />
     </div>
   );
 }

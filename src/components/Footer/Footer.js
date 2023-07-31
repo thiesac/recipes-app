@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import drinkIcon from '../../images/drinkIcon.svg';
-import mealIcon from '../../images/mealIcon.svg';
-import './Footer.css';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import drinkIcon from '../../images/drinkIcon.png';
+import mealIcon from '../../images/mealIcon.png';
+// import './Footer.css';
 
 function Footer() {
   const history = useHistory();
@@ -16,7 +17,7 @@ function Footer() {
   };
 
   const showDrinksBtn = () => (
-    <button
+    <Nav.Link
       onClick={ goToDrinks }
     >
       <img
@@ -24,11 +25,11 @@ function Footer() {
         alt="drinks"
         data-testid="drinks-bottom-btn"
       />
-    </button>
+    </Nav.Link>
   );
 
   const showMealsBtn = () => (
-    <button
+    <Nav.Link
       onClick={ goToMeals }
     >
       <img
@@ -36,14 +37,16 @@ function Footer() {
         alt="meals"
         data-testid="meals-bottom-btn"
       />
-    </button>
+    </Nav.Link>
   );
 
   return (
-    <footer data-testid="footer" className="footer">
-      { showDrinksBtn() }
-      { showMealsBtn() }
-    </footer>
+    <Navbar data-testid="footer" fixed="bottom" bg="warning">
+      <Container>
+        { showDrinksBtn() }
+        { showMealsBtn() }
+      </Container>
+    </Navbar>
   );
 }
 

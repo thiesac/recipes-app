@@ -1,33 +1,34 @@
 // src/pages/FavoriteRecipes/FavoriteRecipes.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import unFav from '../../images/blackHeartIcon.svg';
 
 function FavoriteRecipes() {
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || []; // vem do requisito 34 // retorna valor nulo caso não tenha recipes favoritados
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   const [currFilterFav, setFilterFav] = useState(favoriteRecipes);
-  // const location = useLocation();
-  console.log(favoriteRecipes);
+
   const copyToClipboard = async (text) => {
     await navigator.clipboard.writeText(text);
     Swal.fire('Link copied!');
   };
 
   const clickToUnfavorite = (id) => {
-    // Filtra as receitas favoritas, removendo aquela que possui o ID correspondente ao recebido como argumento
     const updatedRecipes = favoriteRecipes.filter((recipe) => recipe.id !== id);
-    // Atualiza o valor das receitas favoritas no armazenamento local, convertendo o array atualizado em uma string
     localStorage.setItem('favoriteRecipes', JSON.stringify(updatedRecipes));
-    // Atualiza o estado de currFilterFav com as receitas favoritas atualizadas
     setFilterFav(updatedRecipes);
   };
 
-  // tive que tirar de dentro do clickToUnfavorite pois estava dando erro de loop infinito
-  const handleUnfavorite = (id) => {
-    clickToUnfavorite(id);
+  // Function to handle filtering by type
+  const handleFilterByType = (type) => {
+    if (type === 'all') {
+      setFilterFav(favoriteRecipes);
+    } else {
+      setFilterFav(favoriteRecipes.filter((recipe) => recipe.type === type));
+    }
   };
 
   return (
@@ -35,53 +36,42 @@ function FavoriteRecipes() {
       <Header />
       <button
         data-testid="filter-by-all-btn"
-        // eslint
-        onClick={ () => setFilterFav(currFilterFav) }
+        onClick={ () => handleFilterByType('all') }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
-        onClick={ () => setFilterFav(
-          currFilterFav
-            // eslint
-            .filter(({ type }) => type === 'meal'),
-        ) }
+        onClick={ () => handleFilterByType('meal') }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
-        onClick={ () => setFilterFav(
-          currFilterFav
-            // eslint
-            .filter(({ type }) => type === 'drink'),
-        ) }
+        onClick={ () => handleFilterByType('drink') }
       >
         Drinks
       </button>
       { currFilterFav && currFilterFav.length > 0 ? (
-        // Verifica se currFilterFav existe e tem um comprimento maior que zero
-        currFilterFav.map(
-          ({ id, type, nationality, category, alcoholicOrNot, name, image }, index) => (
-            <section key={ index }>
+        currFilterFav
+          .map(({
+            id, type, nationality, category, alcoholicOrNot, name, image,
+          }, index) => (
+            <Card key={ index }>
               <Link to={ `/${type}s/${id}` }>
-                <img
+                <Card.Img
                   src={ image }
                   alt={ name }
-                  // eslint
                   data-testid={ `${index}-horizontal-image` }
                 />
-                <span data-testid={ `${index}-horizontal-name` }>{ name }</span>
+                <Card.Title>{ name }</Card.Title>
               </Link>
               { type === 'meal' ? (
-                <p
-                  data-testid={ `${index}-horizontal-top-text` }
-                >
+                <Card.Subtitle data-testid={ `${index}-horizontal-top-text` }>
                   { `${nationality} - ${category}` }
-                </p>
+                </Card.Subtitle>
               ) : (
-                <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
+                <Card.Subtitle>{ alcoholicOrNot }</Card.Subtitle>
               ) }
               <button
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -91,15 +81,13 @@ function FavoriteRecipes() {
               </button>
               <button
                 data-testid={ `${index}-horizontal-favorite-btn` }
-                onClick={ () => handleUnfavorite(id) }
+                onClick={ () => clickToUnfavorite(id) }
               >
                 <img src={ unFav } alt="unfavorite" />
               </button>
-            </section>
-          ),
-        )
+            </Card>
+          ))
       ) : (
-        // Caso currFilterFav seja nulo ou vazio, exibe uma mensagem indicando que nenhuma receita favorita foi encontrada
         <p>No favorite recipes found.</p>
       ) }
     </div>

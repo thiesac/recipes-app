@@ -8,8 +8,7 @@ function SearchBar() {
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const history = useHistory();
-  // 80% po***
-  // Outro
+
   const onSearchClick = async () => {
     if (searchType === 'first-letter' && searchInput.length > 1) {
       global.alert('Your search must have only 1 (one) character');
@@ -18,8 +17,7 @@ function SearchBar() {
       const eatenApiMeal = await callMealsRecipe(searchInput, searchType);
       setFoodData(eatenApiMeal);
       if (!eatenApiMeal || eatenApiMeal.length === 0) {
-        return global
-          .alert('Sorry, we haven\'t found any recipes for these filters.');
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
 
       const finalIndex = 12; // define o índice final que será utilizado no slice. No caso, 12 primeiros elementos do array 'eatenApiMeal'
@@ -35,8 +33,7 @@ function SearchBar() {
       const eatenApiDrink = await callDrinksRecipe(searchInput, searchType);
       setDrinkData(eatenApiDrink);
       if (!eatenApiDrink || eatenApiDrink.length === 0) {
-        return global
-          .alert('Sorry, we haven\'t found any recipes for these filters.');
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
 
       const finalIndex = 12;
@@ -98,7 +95,6 @@ function SearchBar() {
       >
         Search
       </button>
-
     </form>
   );
 }

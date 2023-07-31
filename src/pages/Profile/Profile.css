@@ -1,0 +1,31 @@
+/* .profile-container {
+  color: #7F00FF;
+}
+ */
+
+ .icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  border: none; /* Remove the border */
+  outline: none; /* Remove the outline */
+}
+
+.button-text {
+  margin-top: 8px;
+}
+
+button {
+
+  background: none;
+  border: none;
+  padding: 10;
+  cursor: pointer;
+}
