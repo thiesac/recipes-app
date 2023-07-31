@@ -75,6 +75,7 @@ The Recipes App was built using the following technologies:
   - React: JavaScript library for building user interfaces.
   - Redux: State management library for managing application state.
   - CSS: Styling and layout of the application.
+  - Bootstrap: Styling and layout of the application.
 
 
 ## Contributors
