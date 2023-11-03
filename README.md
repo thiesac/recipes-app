@@ -6,7 +6,6 @@ The Recipes App is a web application for storing, managing, and sharing your fav
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
