@@ -89,7 +89,6 @@ This project was a collaborative effort, and the contributors include:
 - Roberto Mell @robertomello2
 
 
-- [Your Name]
 
 ## Acknowledgments
 
